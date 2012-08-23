@@ -7,7 +7,7 @@ import tornado.ioloop
 import tornado.options
 import tornado.web
 
-import share,user,index,post,chat, chats
+import share,user,index,chat,chats
 from settings import *
 from base import *
 
