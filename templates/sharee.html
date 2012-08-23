@@ -1,0 +1,86 @@
+{% extends "base.html" %}
+{% block title %}
+{{ escape(share.title) }}-
+{% end %}
+{% block head %}
+<link href="{{ static_url("css/comment.css") }}" rel="stylesheet">
+{% end %}
+{% block body %}
+<div class="span12">
+	<div class="hero-unit">
+		<div id="content">
+			<div class="share">
+				<h2>
+					<a href="/share/{{ share.id }}">
+						{{ escape(share.title) }}
+					</a>
+				</h2>
+				<div class="date">
+					{{ locale.format_date(share.published, full_format=True, shorter=True) }}
+				</div>
+				<div class="body">
+					{{ share.html }}
+				</div>
+				{% if current_user %}
+				<div class="span3">
+					<a href="/share?id={{ share.id }}">
+						<button class="btn btn-success" >
+							编辑本文
+						</button>
+					</a>
+					<form id="likeit" class="pull-right">
+						{{ xsrf_form_html() }}
+						<input type="hidden" name="share_id" id="share_id" value="{{ share.id }}"/>
+						<input type="hidden" name="share_likes" id="share_likes" value="{{ share.likes }}"/>
+						<input type='submit' id="like" class="btn btn-info" value='喜欢({{ share.likes }})' ></form>
+				</div>
+ {% else %}
+				 需要 <a href="/login?next={{ url_escape(request.uri) }}" class="btn btn-primary">登录</a> 后回复方可回复, 如果你还没有账号你可以 <a href="/joinus?next={{ url_escape(request.uri) }}" class="btn btn-danger">注册</a> 一个帐号。
+				{% end %}
+			</div>
+		</div>
+
+	</div>
+
+	<div class="hero-unit">
+		<div id="commentmain">
+			{% if comments %}
+  {% for comment in comments %}
+			<div class="comment">
+				<div class="avatar">
+					<img src="{{comment.gravatar}}" />
+				</div>
+				<div class="name">
+					{{comment.name}}
+				</div>
+				<div class="date" title="写于{{comment.commenttime}}">
+					{{comment.commenttime}}
+				</div>
+				<p>
+					{{comment.commentbody}}
+				</p>
+			</div>
+			{% end %}
+{% end %}
+			<div id="addCommentContainer">
+				<form id="addCommentForm"  >
+					{{ xsrf_form_html() }}
+					<div>
+						<label for="commentbody">
+							评论：
+						</label>
+						<textarea name="commentbody" id="commentbody" cols="20" rows="5"></textarea>
+						<input type="submit" id="submit" value="提交" />
+					</div>
+					<input type="hidden" name="share_id" id="share_id" value="{{ share.id }}"/>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+{% end %}
+
+{% block bottom %}
+<script src="{{ static_url("js/jquery-1.7.2.min.js") }}" type="text/javascript"></script>
+<script src="{{ static_url("js/comment.js") }}" type="text/javascript"></script>
+{% end %}

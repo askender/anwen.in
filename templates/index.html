@@ -1,0 +1,114 @@
+{% extends "base.html" %}
+
+{% block body %}
+
+			<div class="span8">
+				<div class="mod user-feeds">
+					<h2>
+						最新分享
+					</h2>
+					<p>
+						(创造和分享，仅供学习交流，期待内容少而精)
+					</p>
+					<ul class="unstyled">
+{% for share in shares %}
+<li>
+				<h3> <i class="icon-{{ share.sharetype }}"></i>
+					<a href="/share/{{ share.id }}" title="{{ escape(share.title) }}">
+						{{ escape(share.title) }}
+					</a>
+					<span class="bull">
+						&bull;
+					</span>
+					<span>
+						<a href="/share/{{ share.id }}#comments">
+							{{ share.commentnum }}
+						</a>
+					</span>
+				</h3>
+	<p class="user clearfix">
+		<a href="/user/{{ share.domain }}" title="{{ share.name }}" class="pull-right">
+			<img src="{{ share.gravatar }}" width="25" height="25" alt="{{ share.name }}"/>
+		</a>
+		<span class="who">
+			<a href="/user/{{ share.domain }}" title="{{ share.name }}">
+				{{ share.name }}
+			</a>
+		</span>
+		<span data-time='' class="date">
+			{{ share.published }}
+		</span>
+	</p>
+	<p class="info">
+		{{ escape(share.html) }}
+	</p>
+</li>
+{% end %}
+					</ul>
+				</div>
+			</div>
+			<div class="span4">
+				<div class="mod list">
+					<h2>
+						安问推荐
+					</h2>
+					<ul>
+						<li>
+							<a href="/tools/backbone/backbone.js.html" title="Backbone.js API中文文档">
+								Backbone.js API中文文档
+							</a>
+						</li>
+
+					</ul>
+				</div>
+				<div class="mod users-head">
+					<h2>
+						热门关注的标签
+					</h2>
+					<div class="mod-body">
+						<a href="/tag/javascript" title="Javascript">
+							<img src="http://s1.csser.com/c9a780bc549757586675661db3ebb383-48.png" width="35" height="35" alt="Javascript"/>
+						</a>
+
+					</div>
+				</div>
+				<div class="mod users-head">
+					<h2>
+						桉叶排行
+					</h2>
+					<div class="mod-body">
+						<a href="/user/xianlihua" title="一回">
+							<img src="http://s1.csser.com/b6dd557640afdf49d0959f419678bda0-48.png" width="35" height="35" alt="一回"/>
+						</a>
+
+					</div>
+				</div>
+				<div class="mod users-head">
+					<h2>
+						最新会员
+					</h2>
+					<div class="mod-body">
+						<a href="/user/askender" title="askender">
+							<img src="http://www.gravatar.com/avatar/9edd2cf0fe16dcb96e3d0e2ef10fea3d?d=identicon&amp;s=25" width="25" height="25" alt="askender"/>
+						</a>
+					</div>
+				</div>
+				<div class="mod csser-version">
+					<p>
+						<a href="/about" title="关于我们的一切">
+							关于我们
+						</a>
+						<a href="/help" title="提建议或咨询">
+							提建议或咨询
+						</a>
+						<a href="/changelog" title="查看升级日志">
+							升级日志
+						</a>
+					</p>
+				</div>
+			</div>
+
+
+
+
+{% end %}
