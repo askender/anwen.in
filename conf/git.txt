@@ -1,7 +1,5 @@
 git init
-git add *.py
-git add README
-git commit -m 'initial anwen project version'
+git add .
 git status
 
 git commit -m 'some comments'
@@ -11,10 +9,38 @@ git log --stat --summary
 
 git branch local
 git checkout local
-$ git checkout master # ����ǰ��֧�л�Ϊmaster
-$ git merge local # ��local��֧�뵱ǰ��֧�ϲ�
+$ git checkout master # 将当前分支切换为master
+$ git merge local # 将local分支与当前分支合并
 $ git branch -d local
 
 git commit -m "first anwen"
 
 git push -u origin master
+git push origin master
+
+git config --global user.name "askender"
+git config --global user.email "askender43@gmail.com"
+git config --list
+
+git remote add origin https://github.com/askender/anwen.in.git
+
+git clone https://github.com/askender/anwen.in.git
+
+
+
+.撤销更改 
+
+$ git reset HEAD file1 // 取消暂存区的文件快照(即恢复成最后一个提交版本)，这不会影响工作目录的文件修改。 
+
+$ git reset --hard HEAD^ // 将整个项目回溯到以前的某个版本，可以使用 "git reset"。可以选择的参数包括默认的 "--mixed" 和 "--hard"，前者不会取消工作目录的修改，而后者则放弃全部的修改。该操作会丢失其后的日志 
+
+
+$ git checkout -- file1 // 使用暂存区快照恢复工作目录文件，工作目录的文件修改被抛弃。 
+
+$ git checkout HEAD^ file1 // 直接 "签出" 代码仓库中的某个文件版本到工作目录，该操作同时会取消暂存区快照。 
+
+$ git checkout "@{10 minutes ago}" // 直接 "签出" 10分钟之前代码仓库中的某个文件版本到工作目录，该操作同时会取消暂存区快照。 
+
+$ git checkout "@{5}" // 直接 "签出" 倒数第五次保存的某个文件版本到工作目录，该操作同时会取消暂存区快照。 
+
+$ git revert SHA1_HASH // 还原特定哈希值对应的提交。该还原记录作为一个新的提交。 
