@@ -1,0 +1,20 @@
+git init
+git add *.py
+git add README
+git commit -m 'initial anwen project version'
+git status
+
+git commit -m 'some comments'
+git push origin master
+
+git log --stat --summary
+
+git branch local
+git checkout local
+$ git checkout master # 将当前分支切换为master
+$ git merge local # 将local分支与当前分支合并
+$ git branch -d local
+
+git commit -m "first anwen"
+
+git push -u origin master
