@@ -6,7 +6,6 @@ preAllow = true; //定义一个变量，主要是为了防止恶刷，也是为�
 $(function() {
 	$("#addCommentForm").submit(function(e) //使用jquery封装js
 	{
-
 		e.preventDefault();
 		if (preAllow) {
 			preAllow = false;
@@ -18,7 +17,8 @@ $(function() {
 			// 		alert("请输入正确的html文件");
 			// 		flag=0;
 			// }
-			var commentbody = encodeURI(encodeURI($("#commentbody").val()));
+			//var commentbody = encodeURI(encodeURI($("#commentbody").val()));
+			var commentbody = $("#commentbody").val();
 			var share_id = encodeURI(encodeURI($("#share_id").val()));
 			if (commentbody == "") {
 				$("textarea[name=commentbody]").select();
@@ -41,7 +41,7 @@ $(function() {
 					//传送的dict数据
 					success: function(data) { //回调函数，alert返回结果
 						//alert(decodeURI(data));
-						data = decodeURI(decodeURI(data));
+						//data = decodeURI(decodeURI(data));
 						$(data).hide().insertBefore('#addCommentContainer').slideDown();
 						$('#commentbody').val('');
 						preAllow = true;

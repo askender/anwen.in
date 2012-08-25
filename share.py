@@ -10,6 +10,7 @@ from settings import *
 import markdown
 import re
 import unicodedata
+import urllib2
 
 
 class IndexHandler(BaseHandler):
@@ -69,10 +70,12 @@ class CommentHandler(BaseHandler):
         for i in uri.split('&'):
             data = i.split('=')
             mydict[data[0]]=data[1]
+        html = urllib2.unquote(str(mydict['commentbody'])).decode("utf-8")
+        html = markdown.markdown(html)
         comment_id = self.db.execute(
                 "INSERT INTO comments (author_id,share_id,commentbody,"
                 "commenttime) VALUES (%s,%s,%s,UTC_TIMESTAMP())",
-                self.current_user["user_id"], mydict['share_id'], mydict['commentbody'])
+                self.current_user["user_id"], mydict['share_id'], html)
         name = tornado.escape.xhtml_escape(self.current_user["user_name"])
         email = tornado.escape.xhtml_escape(self.current_user["user_email"])
         domain = tornado.escape.xhtml_escape(self.current_user["user_domain"])
@@ -84,7 +87,8 @@ class CommentHandler(BaseHandler):
         newcomment += '</div>'
         newcomment += '<div class="name">'+name+'</div>'
         newcomment += '<div class="date" title="at"></div>'
-        newcomment += '<p>'+mydict['commentbody']+'</p>'
+        newcomment += html
+        #newcomment += '<p>'+mydict['commentbody']+'</p>'
         newcomment += '</div>'
         self.write(newcomment)
 
