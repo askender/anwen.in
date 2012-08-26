@@ -1,6 +1,6 @@
 ﻿# -*- coding:utf-8 -*-
 import hashlib
-
+import markdown
 from base import *
 
 class LoginHandler(BaseHandler):
@@ -70,8 +70,10 @@ class UserhomeHandler(BaseHandler):
     def get(self, name):
         user = self.db.get("SELECT * FROM users WHERE user_domain = %s", name)
         if not user: raise tornado.web.HTTPError(404)
+        user.user_say = markdown.markdown(user.user_say)
         likes = self.db.query("SELECT * FROM likes WHERE user_id = %s", user.user_id)
         likenum = len(likes)
+        user['gravatar'] = "http://www.gravatar.com/avatar.php?"+urllib.urlencode({'gravatar_id':hashlib.md5(user.user_email.lower()).hexdigest(), 'size':str(50)})
         self.render("userhome.html", user=user,likenum=likenum)
 
     def post(self):
@@ -89,7 +91,53 @@ class UserlikeHandler(BaseHandler):
             likes[i]["title"] = share.title
             likes[i]['id'] = share.id
             likes[i]['type'] = share.sharetype
+        user['gravatar'] = "http://www.gravatar.com/avatar.php?"+urllib.urlencode({'gravatar_id':hashlib.md5(user.user_email.lower()).hexdigest(), 'size':str(50)})
         self.render("userlike.html", user=user,likenum=likenum,likes=likes)
 
     def post(self):
         self.get()
+
+
+class SettingHandler(BaseHandler):
+    def get(self):
+        if self.current_user:
+            user = self.db.get("SELECT * FROM users WHERE user_id = %s", self.current_user["user_id"])
+            if not user: self.redirect("/")
+            user.gravatar = "http://www.gravatar.com/avatar.php?"+urllib.urlencode({'gravatar_id':hashlib.md5(user.user_email.lower()).hexdigest(), 'size':str(50)})
+            self.render("setting.html", user=user)
+        else:
+            self.redirect("/")
+
+    def post(self):
+        name = self.get_argument("name",'')
+        city = self.get_argument("city",'')
+        say = self.get_argument("say",'')
+        self.db.execute(
+                "UPDATE users SET user_name = %s,user_city = %s,user_say = %s "
+                "WHERE user_id = %s", name,city,say,self.current_user["user_id"])
+        self.redirect("/setting")
+
+
+class ChangePassHandler(BaseHandler):
+    def get(self):
+        if self.current_user:
+            user = self.db.get("SELECT * FROM users WHERE user_id = %s", self.current_user["user_id"])
+            if not user: self.redirect("/")
+            user.gravatar = "http://www.gravatar.com/avatar.php?"+urllib.urlencode({'gravatar_id':hashlib.md5(user.user_email.lower()).hexdigest(), 'size':str(50)})
+        self.render("changepass.html", user=user)
+
+    def post(self):
+        oldpass=self.get_argument("oldpass",'')
+        newpass=self.get_argument("newpass",'')
+        newpass=hashlib.md5(newpass).hexdigest()
+        user=self.db.get("SELECT `user_id`,`user_name`,`user_email`,`user_domain`,`user_pass` FROM `users` WHERE `user_id`=%s", self.current_user["user_id"])
+        if not user:
+            self.write('User unfound.')
+        else:
+            if user['user_pass']==hashlib.md5(oldpass).hexdigest():
+                self.db.execute(
+                "UPDATE users SET user_pass = %s "
+                "WHERE user_id = %s", newpass,self.current_user["user_id"])
+                self.redirect("/setting")
+            else:
+                self.write('Wrong password')

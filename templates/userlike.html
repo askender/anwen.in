@@ -1,95 +1,30 @@
-{% extends "base.html" %}
+{% extends "userbase.html" %}
 
-{% block body %}
-<div class="span8">
-  <div class="mod user-show">
-    <div class="photo">
-      <a href="/user/askender">
-        <img src="http://www.gravatar.com/avatar/9edd2cf0fe16dcb96e3d0e2ef10fea3d?d=identicon&amp;s=100" width="100" height="100" alt="askender"/>
-      </a>
-    </div>
-    <div class="info"> <strong><h1>
-          <a href="/user/askender">
-            askender
-          </a>
-        </h1>
-        <p> <em>注册日期</em> 
-          <span>
-            {{user.user_registered}}
-          </span>
-        </p>
-        <p> <em>叶子</em> 
-          <span> <i class="icon-leaf"></i>
-            {{user.user_leaf}}
-          </span>
-        </p>
-        <p>
-          <span>
-            <a href="/setting/account" title="修改签名">
-              {{user.user_say}} <i class="icon-edit"></i>
-              修改签名
-            </a>
-          </span>
-        </p></strong> 
-    </div>
-    <div class="operation"></div>
-  </div>
-  <ul class="unstyled nav nav-tabs">
-    <li class="">
-      <a href="/user/{{user.user_domain}}">
-        主页
+{% block usermain %}
+<ul class="unstyled nav nav-tabs">
+  <li class="">
+    <a href="/user/{{user.user_domain}}">
+      主页
+    </a>
+  </li>
+  <li class="active">
+    <a href="/userlike/{{user.user_domain}}">
+      喜欢
+      <span class="badge">
+        {{likenum}}
+      </span>
+    </a>
+  </li>
+</ul>
+<div class="user-feeds">
+  <ul class="unstyled">
+    {% for like in likes %}
+    <li> <i class="icon-{{ like.type }}"></i>
+      <a href="/share/{{ like.id }}" title="{{ escape(like.title) }}">
+        {{ escape(like.title) }}
       </a>
     </li>
-    <li class="active">
-      <a href="/userlike/{{user.user_domain}}">喜欢<span class="badge">{{likenum}}</span>
-      </a>
-    </li>
+    {% end %}
   </ul>
-  <div class="user-feeds">
-    <ul class="unstyled">
-      {% for like in likes %}
-      <li>
-        <i class="icon-{{ like.type }}"></i>
-        <a href="/share/{{ like.id }}" title="{{ escape(like.title) }}">
-          {{ escape(like.title) }}
-        </a>
-      </li>
-      {% end %}
-    </ul>
-  </div>
-</div>
-<div class="span4">
-  <div class="mod user-stat">
-    <ul class="unstyled">
-      <li>
-        <a href="/user/askender/follows"> <strong>0</strong> 
-          关注的人
-        </a>
-      </li>
-      <li>
-        <a href="/user/askender/fans">
-          <strong>
-            0
-          </strong>
-          粉丝
-        </a>
-      </li>
-    </ul>
-    <div>
-      <strong>
-        我 还没有关注任何人
-      </strong>
-    </div>
-    <div>
-      <strong>
-        还没有粉丝
-      </strong>
-    </div>
-    <div>
-      <strong>
-        还没有关注任何标签
-      </strong>
-    </div>
-  </div>
 </div>
 {% end %}

@@ -18,7 +18,7 @@ class Application(tornado.web.Application):
             template_path=os.path.join(os.path.dirname(__file__), "templates"),
             static_path=os.path.join(os.path.dirname(__file__), "static"),
             locale_path=os.path.join(os.path.dirname(__file__), "_locale"),
-            ui_modules={"Entry": EntryModule,"Userinfo": UserinfoModule},
+            ui_modules={"Entry": EntryModule,"Useradmin": UseradminModule},
             xsrf_cookies=True,
             cookie_secret="11oETzKXQAGaYdkL5gEmGeJJFuYh7EQnp2XdTP1o/Vo=",
             login_url="/googlelogin",
@@ -46,6 +46,8 @@ class Application(tornado.web.Application):
             (r"/login", user.LoginHandler),
             (r"/joinus", user.JoinusHandler),
             (r"/logout", user.LogoutHandler),
+            (r'/setting', user.SettingHandler), 
+            (r'/changepass', user.ChangePassHandler), 
 
             (r"/chat", chat.ChatHandler),
             (r"/a/message/new", chat.MessageNewHandler),
@@ -71,7 +73,7 @@ class EntryModule(tornado.web.UIModule):
     def render(self, entry):
         return self.render_string("modules/entry.html", entry=entry)
 
-class UserinfoModule(tornado.web.UIModule):
+class UseradminModule(tornado.web.UIModule):
     def render(self):
         if self.current_user:
             name = tornado.escape.xhtml_escape(self.current_user["user_name"])
@@ -82,7 +84,8 @@ class UserinfoModule(tornado.web.UIModule):
             name = ''
             gravatar = ''
             domain = ''
-        return self.render_string("modules/userinfo.html",name=name,gravatar=gravatar,domain=domain)
+        return self.render_string("modules/useradmin.html",name=name,gravatar=gravatar,domain=domain)
+
 
 def main():
     #tornado.locale.load_translations(
