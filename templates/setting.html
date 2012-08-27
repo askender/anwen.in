@@ -1,5 +1,7 @@
 {% extends "userbase.html" %}
-
+{% block title %}
+修改设置-
+{% end %}
 {% block usermain %}
 <ul class="unstyled nav nav-tabs">
   <li class="active">
@@ -35,9 +37,13 @@
 
     <div class="control-group">
       <label for="say" class="control-label">
-        个性说明<br/>(<a href="/markdown" target="_blank">
+        个性说明
+        <br/>
+        (
+        <a href="/markdown" target="_blank">
           支持Markdown
-        </a>)
+        </a>
+        )
       </label>
       <div class="controls">
         <textarea id="say" name="say" rows="20" class="input-xxlarge">
@@ -46,7 +52,13 @@
       </div>
     </div>
 
-
+    <div class="control-group">
+      <label for="say" class="control-label">
+        要设置头像，请前往<a href="http://gravatar.com" target="_blank">
+          Gravatar
+        </a>
+      </label>
+    </div>
 
     <div class="form-actions">
       <input type="submit" value="保存" name="dosubmit" class="btn btn-primary"/>
