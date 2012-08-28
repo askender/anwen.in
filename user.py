@@ -73,7 +73,7 @@ class UserhomeHandler(BaseHandler):
         user.user_say = markdown.markdown(user.user_say)
         likes = self.db.query("SELECT * FROM likes WHERE user_id = %s", user.user_id)
         likenum = len(likes)
-        user['gravatar'] = "http://www.gravatar.com/avatar.php?"+urllib.urlencode({'gravatar_id':hashlib.md5(user.user_email.lower()).hexdigest(), 'size':str(50)})
+        user['gravatar'] = "http://www.gravatar.com/avatar.php?"+urllib.urlencode({'gravatar_id':hashlib.md5(user.user_email.lower()).hexdigest(), 'size':str(100)})
         self.render("userhome.html", user=user,likenum=likenum)
 
     def post(self):
@@ -91,7 +91,7 @@ class UserlikeHandler(BaseHandler):
             likes[i]["title"] = share.title
             likes[i]['id'] = share.id
             likes[i]['type'] = share.sharetype
-        user['gravatar'] = "http://www.gravatar.com/avatar.php?"+urllib.urlencode({'gravatar_id':hashlib.md5(user.user_email.lower()).hexdigest(), 'size':str(50)})
+        user['gravatar'] = "http://www.gravatar.com/avatar.php?"+urllib.urlencode({'gravatar_id':hashlib.md5(user.user_email.lower()).hexdigest(), 'size':str(100)})
         self.render("userlike.html", user=user,likenum=likenum,likes=likes)
 
     def post(self):
@@ -103,7 +103,7 @@ class SettingHandler(BaseHandler):
         if self.current_user:
             user = self.db.get("SELECT * FROM users WHERE user_id = %s", self.current_user["user_id"])
             if not user: self.redirect("/")
-            user.gravatar = "http://www.gravatar.com/avatar.php?"+urllib.urlencode({'gravatar_id':hashlib.md5(user.user_email.lower()).hexdigest(), 'size':str(50)})
+            user.gravatar = "http://www.gravatar.com/avatar.php?"+urllib.urlencode({'gravatar_id':hashlib.md5(user.user_email.lower()).hexdigest(), 'size':str(100)})
             self.render("setting.html", user=user)
         else:
             self.redirect("/")
@@ -123,8 +123,10 @@ class ChangePassHandler(BaseHandler):
         if self.current_user:
             user = self.db.get("SELECT * FROM users WHERE user_id = %s", self.current_user["user_id"])
             if not user: self.redirect("/")
-            user.gravatar = "http://www.gravatar.com/avatar.php?"+urllib.urlencode({'gravatar_id':hashlib.md5(user.user_email.lower()).hexdigest(), 'size':str(50)})
-        self.render("changepass.html", user=user)
+            user.gravatar = "http://www.gravatar.com/avatar.php?"+urllib.urlencode({'gravatar_id':hashlib.md5(user.user_email.lower()).hexdigest(), 'size':str(100)})
+            self.render("changepass.html", user=user)
+        else:
+            self.redirect("/")
 
     def post(self):
         oldpass=self.get_argument("oldpass",'')
@@ -141,3 +143,10 @@ class ChangePassHandler(BaseHandler):
                 self.redirect("/setting")
             else:
                 self.write('Wrong password')
+
+
+class MemberHandler(BaseHandler):
+    def get(self):
+        members = self.db.query("SELECT `user_id`,`user_name`,`user_email` FROM `users` ORDER BY user_id "
+                                "DESC LIMIT 50")
+        self.render("member.html", members=members)

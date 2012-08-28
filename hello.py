@@ -33,9 +33,12 @@ class Application(tornado.web.Application):
             (r"/changelog",index.SpecialHandler),
             (r"/help",index.SpecialHandler),
             (r"/markdown", index.SpecialHandler),
+            (r"/nodes", index.SpecialHandler),
+            (r"/node/([^/]+)", index.NodeHandler),
 
             (r"/user/([^/]+)", user.UserhomeHandler),
             (r"/userlike/([^/]+)", user.UserlikeHandler),
+            (r"/member", user.MemberHandler),
 
             (r"/share", share.IndexHandler),
             (r"/sharecomment", share.CommentHandler),

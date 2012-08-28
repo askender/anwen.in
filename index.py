@@ -17,8 +17,15 @@ class IndexHandler(BaseHandler):
             shares[i]['domain'] = user.user_domain
             shares[i]['html'] = filter_tags(shares[i]['html'])[:50]
             shares[i]['gravatar'] = "http://www.gravatar.com/avatar.php?"+urllib.urlencode({'gravatar_id':hashlib.md5(user.user_email.lower()).hexdigest(), 'size':str(16)})
-            #shares[1].get("name")
-        self.render("index.html", shares=shares)
+        members = self.db.query("SELECT `user_id`,`user_name`,`user_domain` FROM `users` ORDER BY user_id "
+                                "DESC LIMIT 20")
+        membernum = len(members)
+        if membernum >20:
+            membernum = 21
+        for i in range(0,membernum):
+            user = self.db.get("SELECT * FROM `users` WHERE `user_id`=%s", shares[i]['author_id'])
+            members[i]['gravatar'] = "http://www.gravatar.com/avatar.php?"+urllib.urlencode({'gravatar_id':hashlib.md5(user.user_email.lower()).hexdigest(), 'size':str(35)})
+        self.render("index.html",shares=shares,members=members)
 
 
 class SpecialHandler(BaseHandler):
@@ -35,3 +42,27 @@ class SpecialHandler(BaseHandler):
             comments[i]['domain'] = user.user_domain
             comments[i]['gravatar'] = "http://www.gravatar.com/avatar.php?"+urllib.urlencode({'gravatar_id':hashlib.md5(user.user_email.lower()).hexdigest(), 'size':str(50)})
         self.render("sharee.html", share=share,comments=comments)
+
+
+class NodeHandler(BaseHandler):
+    def get(self,node):
+        shares = self.db.query("SELECT * FROM shares where sharetype = %s ORDER BY published "
+                                "DESC LIMIT 10",node)
+        sharenum = len(shares)
+        if sharenum >10:
+            sharenum = 11
+        for i in range(0,sharenum):
+            user = self.db.get("SELECT * FROM `users` WHERE `user_id`=%s", shares[i]['author_id'])
+            shares[i]["name"] = user.user_name
+            shares[i]['domain'] = user.user_domain
+            shares[i]['html'] = filter_tags(shares[i]['html'])[:50]
+            shares[i]['gravatar'] = "http://www.gravatar.com/avatar.php?"+urllib.urlencode({'gravatar_id':hashlib.md5(user.user_email.lower()).hexdigest(), 'size':str(16)})
+        members = self.db.query("SELECT `user_id`,`user_name`,`user_domain` FROM `users` ORDER BY user_id "
+                                "DESC LIMIT 20")
+        membernum = len(members)
+        if membernum >20:
+            membernum = 21
+        for i in range(0,membernum):
+            user = self.db.get("SELECT * FROM `users` WHERE `user_id`=%s", shares[i]['author_id'])
+            members[i]['gravatar'] = "http://www.gravatar.com/avatar.php?"+urllib.urlencode({'gravatar_id':hashlib.md5(user.user_email.lower()).hexdigest(), 'size':str(35)})
+        self.render("node.html",shares=shares,members=members)
