@@ -50,7 +50,7 @@ class JoinusHandler(BaseHandler):
             user_id = self.db.execute(
                 "INSERT INTO users (user_email,user_name,user_pass,user_domain) VALUES (%s,%s,%s,%s)",
                 email, name, password,domain)
-            user=get_user_byid(user_id)
+            user=self.get_user_byid(user_id)
             self.set_secure_cookie("user", tornado.escape.json_encode(user))
             self.redirect(self.get_argument("next", "/"))
         else:

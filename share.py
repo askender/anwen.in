@@ -13,7 +13,7 @@ import unicodedata
 import urllib2
 
 
-class IndexHandler(BaseHandler):
+class ShareHandler(BaseHandler):
     @tornado.web.authenticated
     def get(self):
         id = self.get_argument("id", None)
@@ -56,7 +56,7 @@ class EntryHandler(BaseHandler):
         comments = self.db.query("SELECT * FROM comments WHERE share_id = %s ORDER BY id DESC", id)
         commentnum = len(comments)
         for i in range(0,commentnum):
-            user = get_user_byid(comments[i]['author_id'])
+            user = self.get_user_byid(comments[i]['author_id'])
             comments[i]["name"] = user.user_name
             comments[i]['domain'] = user.user_domain
             comments[i]['gravatar'] = self.get_avatar(user.user_email,50)

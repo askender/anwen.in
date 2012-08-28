@@ -29,7 +29,7 @@ handlers = [
     (r"/userlike/([^/]+)", UserlikeHandler),
     (r"/member", MemberHandler),
 
-    (r"/share", ShareHandle),
+    (r"/share", ShareHandler),
     (r"/sharecomment", CommentHandler),
     (r"/sharelike", LikeHandler),
     (r"/share/([^/]+)", EntryHandler),
