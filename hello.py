@@ -1,4 +1,10 @@
-# -*- coding:utf-8 -*-
+# -*- coding: utf-8 -*- 
+# AUTHOR: askender <askender43@gmail.com>
+# FILE: hello.py
+# CREATED: 2012-08-28 18:05:19
+# MODIFIED: 2012-08-28 18:05:23
+# DESCRIPTION: Main Server File say hello
+
 import os.path
 
 import tornado.database
@@ -7,9 +13,9 @@ import tornado.ioloop
 import tornado.options
 import tornado.web
 
-import share,user,index,chat,chats
 from settings import *
 from base import *
+from handlers import handlers
 
 class Application(tornado.web.Application):
     def __init__(self):
@@ -25,45 +31,6 @@ class Application(tornado.web.Application):
             autoescape=None,
             debug=True,
         )
-
-        handlers = [
-            (r"/", index.IndexHandler),
-            (r"/index.html", index.IndexHandler),
-            (r"/about",index.SpecialHandler),
-            (r"/changelog",index.SpecialHandler),
-            (r"/help",index.SpecialHandler),
-            (r"/markdown", index.SpecialHandler),
-            (r"/nodes", index.SpecialHandler),
-            (r"/node/([^/]+)", index.NodeHandler),
-
-            (r"/user/([^/]+)", user.UserhomeHandler),
-            (r"/userlike/([^/]+)", user.UserlikeHandler),
-            (r"/member", user.MemberHandler),
-
-            (r"/share", share.IndexHandler),
-            (r"/sharecomment", share.CommentHandler),
-            (r"/sharelike", share.LikeHandler),
-            (r"/share/([^/]+)", share.EntryHandler),
-            (r"/feed", share.FeedHandler),
-
-            (r"/login", user.LoginHandler),
-            (r"/joinus", user.JoinusHandler),
-            (r"/logout", user.LogoutHandler),
-            (r'/setting', user.SettingHandler), 
-            (r'/changepass', user.ChangePassHandler), 
-
-            (r"/chat", chat.ChatHandler),
-            (r"/a/message/new", chat.MessageNewHandler),
-            (r"/a/message/updates", chat.MessageUpdatesHandler),
-            (r"/chats", chats.ChatsHandler),
-            (r"/chatsocket", chats.ChatSocketHandler),
-
-            (r"/(favicon\.ico)", tornado.web.StaticFileHandler,dict(path=settings['static_path'])),
-            (r"/(apple-touch-icon\.png)", tornado.web.StaticFileHandler,dict(path=settings['static_path'])),
-            #(r"/(.*)", index.UrlHandler),
-        ]
-
-
 
         tornado.web.Application.__init__(self, handlers, **settings)
 

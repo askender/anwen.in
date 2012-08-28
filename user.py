@@ -17,7 +17,7 @@ class LoginHandler(BaseHandler):
             return
         email=self.get_argument("email",'')
         password=self.get_argument("password",'')
-        user=self.db.get("SELECT `user_id`,`user_name`,`user_email`,`user_domain`,`user_pass` FROM `users` WHERE `user_email`=%s", email)
+        user=self.get_user_byemail(email)
         if not user:
             self.write('User unfound.')
         else:
@@ -45,12 +45,12 @@ class JoinusHandler(BaseHandler):
         password=hashlib.md5(password).hexdigest()
         email=self.get_argument("email",'')
         domain=self.get_argument("domain",'')
-        user=self.db.get("SELECT * FROM `users` WHERE `user_email`=%s", email)
+        user=self.get_user_byemail(email)
         if not user:
             user_id = self.db.execute(
                 "INSERT INTO users (user_email,user_name,user_pass,user_domain) VALUES (%s,%s,%s,%s)",
                 email, name, password,domain)
-            user=self.db.get("SELECT `user_id`,`user_name`,`user_email`,`user_domain` FROM `users` WHERE `user_id`=%s", user_id)
+            user=get_user_byid(user_id)
             self.set_secure_cookie("user", tornado.escape.json_encode(user))
             self.redirect(self.get_argument("next", "/"))
         else:
@@ -73,7 +73,7 @@ class UserhomeHandler(BaseHandler):
         user.user_say = markdown.markdown(user.user_say)
         likes = self.db.query("SELECT * FROM likes WHERE user_id = %s", user.user_id)
         likenum = len(likes)
-        user['gravatar'] = "http://www.gravatar.com/avatar.php?"+urllib.urlencode({'gravatar_id':hashlib.md5(user.user_email.lower()).hexdigest(), 'size':str(100)})
+        user['gravatar'] = self.get_avatar(user.user_email,100)
         self.render("userhome.html", user=user,likenum=likenum)
 
     def post(self):
@@ -82,7 +82,7 @@ class UserhomeHandler(BaseHandler):
 
 class UserlikeHandler(BaseHandler):
     def get(self, name):
-        user = self.db.get("SELECT * FROM users WHERE user_domain = %s", name)
+        user = self.get_user_bydomain(name)
         if not user: raise tornado.web.HTTPError(404)
         likes = self.db.query("SELECT * FROM likes WHERE user_id = %s", user.user_id)
         likenum = len(likes)
@@ -91,7 +91,7 @@ class UserlikeHandler(BaseHandler):
             likes[i]["title"] = share.title
             likes[i]['id'] = share.id
             likes[i]['type'] = share.sharetype
-        user['gravatar'] = "http://www.gravatar.com/avatar.php?"+urllib.urlencode({'gravatar_id':hashlib.md5(user.user_email.lower()).hexdigest(), 'size':str(100)})
+        user['gravatar'] = self.get_avatar(user.user_email,100)
         self.render("userlike.html", user=user,likenum=likenum,likes=likes)
 
     def post(self):
@@ -101,9 +101,9 @@ class UserlikeHandler(BaseHandler):
 class SettingHandler(BaseHandler):
     def get(self):
         if self.current_user:
-            user = self.db.get("SELECT * FROM users WHERE user_id = %s", self.current_user["user_id"])
+            user = self.get_user_bycookie()
             if not user: self.redirect("/")
-            user.gravatar = "http://www.gravatar.com/avatar.php?"+urllib.urlencode({'gravatar_id':hashlib.md5(user.user_email.lower()).hexdigest(), 'size':str(100)})
+            user.gravatar = self.get_avatar(user.user_email,100)
             self.render("setting.html", user=user)
         else:
             self.redirect("/")
@@ -121,9 +121,9 @@ class SettingHandler(BaseHandler):
 class ChangePassHandler(BaseHandler):
     def get(self):
         if self.current_user:
-            user = self.db.get("SELECT * FROM users WHERE user_id = %s", self.current_user["user_id"])
+            user = self.get_user_bycookie()
             if not user: self.redirect("/")
-            user.gravatar = "http://www.gravatar.com/avatar.php?"+urllib.urlencode({'gravatar_id':hashlib.md5(user.user_email.lower()).hexdigest(), 'size':str(100)})
+            user.gravatar = self.get_avatar(user.user_email,100)
             self.render("changepass.html", user=user)
         else:
             self.redirect("/")
@@ -132,7 +132,7 @@ class ChangePassHandler(BaseHandler):
         oldpass=self.get_argument("oldpass",'')
         newpass=self.get_argument("newpass",'')
         newpass=hashlib.md5(newpass).hexdigest()
-        user=self.db.get("SELECT `user_id`,`user_name`,`user_email`,`user_domain`,`user_pass` FROM `users` WHERE `user_id`=%s", self.current_user["user_id"])
+        user=self.get_user_bycookie()
         if not user:
             self.write('User unfound.')
         else:

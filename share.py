@@ -56,10 +56,10 @@ class EntryHandler(BaseHandler):
         comments = self.db.query("SELECT * FROM comments WHERE share_id = %s ORDER BY id DESC", id)
         commentnum = len(comments)
         for i in range(0,commentnum):
-            user = self.db.get("SELECT * FROM `users` WHERE `user_id`=%s", comments[i]['author_id'])
+            user = get_user_byid(comments[i]['author_id'])
             comments[i]["name"] = user.user_name
             comments[i]['domain'] = user.user_domain
-            comments[i]['gravatar'] = "http://www.gravatar.com/avatar.php?"+urllib.urlencode({'gravatar_id':hashlib.md5(user.user_email.lower()).hexdigest(), 'size':str(50)})
+            comments[i]['gravatar'] = self.get_avatar(user.user_email,50)
         self.render("sharee.html", share=share,comments=comments)
 
 
@@ -79,7 +79,7 @@ class CommentHandler(BaseHandler):
         name = tornado.escape.xhtml_escape(self.current_user["user_name"])
         email = tornado.escape.xhtml_escape(self.current_user["user_email"])
         domain = tornado.escape.xhtml_escape(self.current_user["user_domain"])
-        gravatar = "http://www.gravatar.com/avatar.php?"+urllib.urlencode({'gravatar_id':hashlib.md5(email.lower()).hexdigest(), 'size':str(50)})
+        gravatar = self.get_avatar(user.user_email,50)
         newcomment = ''
         newcomment += ' <div class="comment">'
         newcomment += '<div class="avatar">'
