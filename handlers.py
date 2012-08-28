@@ -17,7 +17,7 @@ from chat import *
 
 handlers = [
     (r"/", IndexHandler),
-    (r"/html", IndexHandler),
+    (r"/.html", IndexHandler),
     (r"/about",SpecialHandler),
     (r"/changelog",SpecialHandler),
     (r"/help",SpecialHandler),
@@ -29,7 +29,7 @@ handlers = [
     (r"/userlike/([^/]+)", UserlikeHandler),
     (r"/member", MemberHandler),
 
-    (r"/share", IndexHandler),
+    (r"/share", ShareHandle),
     (r"/sharecomment", CommentHandler),
     (r"/sharelike", LikeHandler),
     (r"/share/([^/]+)", EntryHandler),
