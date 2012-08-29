@@ -26,7 +26,7 @@ class BaseHandler(tornado.web.RequestHandler):
         return user
 
     def get_user_byemail(self,userkey):
-        user=self.db.get("SELECT * FROM `users` WHERE `user_email`=%s", userkey)
+        user=self.db.get("SELECT `user_id`,`user_name`,`user_email`,`user_domain`,`user_pass` FROM `users` WHERE `user_email`=%s", userkey)
         return user
 
     def get_user_byid(self,userkey):
