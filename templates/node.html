@@ -47,6 +47,52 @@
 			{% end %}
 		</ul>
 	</div>
+
+	<div class="pagination">
+		<ul>
+			{% if int(page)>1 %}
+			<li>
+				<a href="?page={{int(page)-1}}">
+					前一页
+				</a>
+			</li>
+			{% end %}
+			<li class="active">
+				<a href="#">
+					{{page}}
+				</a>
+			</li>
+			{% if int(sharesum)>int(page)   %}
+			<li>
+				<a href="?page={{int(page)+1}}">
+					{{int(page)+1}}
+				</a>
+			</li>
+			{% end %}
+{% if int(sharesum)-int(page)-1>0   %}
+			<li>
+				<a href="?page={{int(page)+2}}">
+					{{int(page)+2}}
+				</a>
+			</li>
+			{% end %}
+{% if int(sharesum)-int(page)-2>0   %}
+			<li>
+				<a href="?page={{int(page)+3}}">
+					{{int(page)+3}}
+				</a>
+			</li>
+			{% end %}
+{% if int(sharesum)>int(page)   %}
+			<li>
+				<a href="?page={{int(page)+1}}">
+					下一页
+				</a>
+			</li>
+			{% end %}
+		</ul>
+	</div>
+
 </div>
 <div class="span4">
 	<div class="mod list">
@@ -55,22 +101,23 @@
 		</h2>
 		<ul>
 			<li>
-				<a href="/tools/backbone/backbone.js.html" title="Backbone.js API中文文档">
-					Backbone.js API中文文档
-				</a>
+				<a href="#" title=""></a>
 			</li>
-
 		</ul>
 	</div>
 	<div class="mod users-head">
 		<h2>
-			热门关注的标签
+			最近节点
 		</h2>
-		<div class="mod-body">
-			<a href="/tag/javascript" title="Javascript">
-				<img src="http://s1.csser.com/c9a780bc549757586675661db3ebb383-48.png" width="35" height="35" alt="Javascript"/>
-			</a>
 
+		<div class="node-box">
+			<div class="btn-group">
+				<a class="node" href="/node/film" >
+					<button class="btn btn-info">
+						视频
+					</button>
+				</a>
+			</div>
 		</div>
 	</div>
 	<div class="mod users-head">

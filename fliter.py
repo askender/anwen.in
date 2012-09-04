@@ -1,5 +1,5 @@
-﻿#更深层次的过滤，类似instapaper或者readitlater这种服务，很有意思的研究课题
 # -*- coding: utf-8-*-
+#更深层次的过滤，类似instapaper或者readitlater这种服务，很有意思的研究课题
 import re
 ##过滤HTML中的标签
 #将HTML中标签等信息去掉

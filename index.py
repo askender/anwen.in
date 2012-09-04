@@ -1,4 +1,4 @@
-﻿# -*- coding:utf-8 -*-
+# -*- coding:utf-8 -*-
 import tornado.escape
 from settings import *
 from base import *
@@ -47,11 +47,13 @@ class SpecialHandler(BaseHandler):
 
 class NodeHandler(BaseHandler):
     def get(self,node):
+        page = self.get_argument("page", "1")
+        sharesum = self.db.execute_rowcount("SELECT * FROM shares where sharetype = %s",node)
+        sharesum = (sharesum+9)/10
         shares = self.db.query("SELECT * FROM shares where sharetype = %s ORDER BY published "
-                                "DESC LIMIT 10",node)
+                                "DESC LIMIT %s,10",node,(int(page)-1)*10)
+        if not shares: raise tornado.web.HTTPError(404)
         sharenum = len(shares)
-        if sharenum >10:
-            sharenum = 11
         for i in range(0,sharenum):
             user = self.get_user_byid(shares[i]['author_id'])
             shares[i]["name"] = user.user_name
@@ -66,4 +68,4 @@ class NodeHandler(BaseHandler):
         for i in range(0,membernum):
             user = self.get_user_byid(shares[i]['author_id'])
             members[i]['gravatar'] = "http://www.gravatar.com/avatar.php?"+urllib.urlencode({'gravatar_id':hashlib.md5(user.user_email.lower()).hexdigest(), 'size':str(35)})
-        self.render("node.html",shares=shares,members=members)
+        self.render("node.html",shares=shares,members=members,sharesum=sharesum,page=page)

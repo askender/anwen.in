@@ -1,4 +1,4 @@
-﻿# -*- coding:utf-8 -*-
+# -*- coding:utf-8 -*-
 """Simplified chat demo for websockets.
 
 Authentication, error handling, etc are left as an exercise for the reader :)
