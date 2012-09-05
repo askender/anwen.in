@@ -4,20 +4,30 @@ from settings import *
 from base import *
 from fliter import *
 
+import memcache
+mc = memcache.Client(['127.0.0.1:11211'], debug=0)
+
+
 class IndexHandler(BaseHandler):
     def get(self):
         page = self.get_argument("page", "1")
         sharesum = self.db.execute_rowcount("SELECT * FROM shares")
         sharesum = (sharesum+9)/10
-        shares = self.db.query("SELECT * FROM shares ORDER BY id "
-                                "DESC LIMIT %s,10",(int(page)-1)*10)
+        realpage = str((int(page)-1)*10)
+        sharessql = "SELECT * FROM shares ORDER BY id DESC LIMIT "+realpage+",10"
+
+        key = 'sharessql'
+        shares = mc.get(key)
+        if not shares:
+            shares = self.db.query(sharessql)
+            mc.set(key,shares,60*5) #存5分钟
         sharenum = len(shares)
         for i in range(0,sharenum):
             user = self.get_user_byid(shares[i]['author_id'])
             shares[i]["name"] = user.user_name
             shares[i]['domain'] = user.user_domain
-            shares[i]['html'] = filter_tags(shares[i]['html'])[:50]
-            shares[i]['gravatar'] = "http://www.gravatar.com/avatar.php?"+urllib.urlencode({'gravatar_id':hashlib.md5(user.user_email.lower()).hexdigest(), 'size':str(16)})
+            shares[i]['html'] = filter_tags(shares[i]['html'])[:100]
+            shares[i]['gravatar'] = self.get_avatar(user.user_email,16)
         members = self.db.query("SELECT `user_id`,`user_name`,`user_domain` FROM `users` "
                                 "ORDER BY user_id DESC LIMIT 20")
         membernum = len(members)
@@ -41,7 +51,7 @@ class SpecialHandler(BaseHandler):
             user = self.get_user_byid(comments[i]['author_id'])
             comments[i]["name"] = user.user_name
             comments[i]['domain'] = user.user_domain
-            comments[i]['gravatar'] = "http://www.gravatar.com/avatar.php?"+urllib.urlencode({'gravatar_id':hashlib.md5(user.user_email.lower()).hexdigest(), 'size':str(50)})
+            comments[i]['gravatar'] = self.get_avatar(user.user_email,50)
         self.render("sharee.html", share=share,comments=comments)
 
 
@@ -59,7 +69,7 @@ class NodeHandler(BaseHandler):
             shares[i]["name"] = user.user_name
             shares[i]['domain'] = user.user_domain
             shares[i]['html'] = filter_tags(shares[i]['html'])[:50]
-            shares[i]['gravatar'] = "http://www.gravatar.com/avatar.php?"+urllib.urlencode({'gravatar_id':hashlib.md5(user.user_email.lower()).hexdigest(), 'size':str(16)})
+            shares[i]['gravatar'] = self.get_avatar(user.user_email,16)
         members = self.db.query("SELECT `user_id`,`user_name`,`user_domain` FROM `users` "
                                 "ORDER BY user_id DESC LIMIT 20")
         membernum = len(members)
@@ -67,5 +77,5 @@ class NodeHandler(BaseHandler):
             membernum = 21
         for i in range(0,membernum):
             user = self.get_user_byid(shares[i]['author_id'])
-            members[i]['gravatar'] = "http://www.gravatar.com/avatar.php?"+urllib.urlencode({'gravatar_id':hashlib.md5(user.user_email.lower()).hexdigest(), 'size':str(35)})
+            members[i]['gravatar'] = self.get_avatar(user.user_email,35)
         self.render("node.html",shares=shares,members=members,sharesum=sharesum,page=page)
