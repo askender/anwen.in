@@ -9,7 +9,6 @@ import tornado.options
 import tornado.web
 
 # import code for encoding urls and generating md5 hashes
-import urllib, hashlib
 
 class BaseHandler(tornado.web.RequestHandler):
     @property
@@ -37,7 +36,19 @@ class BaseHandler(tornado.web.RequestHandler):
         user=self.db.get("SELECT * FROM `users` WHERE `user_domain`=%s", userkey)
         return user
 
-    def get_avatar(self, email, size):
-        gravatar_id = hashlib.md5(email.lower()).hexdigest()
-        size = str(size)
-        return "http://www.gravatar.com/avatar/%s?size=%s" % (gravatar_id,size)
+
+def require_login(method):
+    """Decorate methods with this to require user logged in."""
+    import functools
+    import tornado
+
+    @functools.wraps(method)
+    def wrapper(self, *args, **kwargs):
+        if not self.current_user:
+            raise tornado.web.HTTPError(403)
+        return method(self, *args, **kwargs)
+    return wrapper
+
+
+
+

@@ -2,22 +2,17 @@
 # AUTHOR: askender <askender43@gmail.com>
 # FILE: handlers.py
 # CREATED: 2012-08-28 17:53:10
-# MODIFIED: 2012-08-28 17:53:15
+# MODIFIED: 2012-09-18 22:01:17
 # DESCRIPTION: URL Route
 
-from index import *
-from user import *
-from share import *
-from chats import *
-from chat import *
-
-'''
-'' Handler 命名规范： [动宾结构 / 名词] + Handler
-'''
+from .index import RedirectHandler, IndexHandler, SpecialHandler, NodeHandler
+from .user import LoginHandler, JoinusHandler, LogoutHandler, UserhomeHandler, UserlikeHandler, SettingHandler, ChangePassHandler, MemberHandler
+from .share import ShareHandler, EntryHandler, CommentHandler, LikeHandler, FeedHandler
+from .chat import ChatHandler, MessageNewHandler, MessageUpdatesHandler
+from .chats import ChatsHandler, ChatSocketHandler
 
 handlers = [
     (r"/", IndexHandler),
-    (r"/.html", IndexHandler),
     (r"/about",SpecialHandler),
     (r"/changelog",SpecialHandler),
     (r"/help",SpecialHandler),
@@ -47,5 +42,6 @@ handlers = [
     (r"/chats", ChatsHandler),
     (r"/chatsocket", ChatSocketHandler),
 
-    #(r"/(.*)", UrlHandler),
+    (r'/(.*)', RedirectHandler),  # always put this at last
+
 ]

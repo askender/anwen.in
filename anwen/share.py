@@ -1,6 +1,4 @@
 # -*- coding:utf-8 -*-
-#music envelope heart user film time road download-alt flag headphones book bookmark camera picture pencil question-sign gift leaf fire eye-open comment magnet retweet hdd bullhorn bell thumbs-up thumbs-down globe tasks
-#pencil music film user road book picture  fire eye-open question-sign
 import tornado.database
 import tornado.web
 
@@ -59,7 +57,7 @@ class EntryHandler(BaseHandler):
             user = self.get_user_byid(comments[i]['author_id'])
             comments[i]["name"] = user.user_name
             comments[i]['domain'] = user.user_domain
-            comments[i]['gravatar'] = self.get_avatar(user.user_email,50)
+            comments[i]['gravatar'] = get_avatar(user.user_email,50)
         self.render("sharee.html", share=share,comments=comments)
 
 
@@ -79,7 +77,7 @@ class CommentHandler(BaseHandler):
         name = tornado.escape.xhtml_escape(self.current_user["user_name"])
         email = tornado.escape.xhtml_escape(self.current_user["user_email"])
         domain = tornado.escape.xhtml_escape(self.current_user["user_domain"])
-        gravatar = self.get_avatar(user.user_email,50)
+        gravatar = get_avatar(user.user_email,50)
         newcomment = ''
         newcomment += ' <div class="comment">'
         newcomment += '<div class="avatar">'

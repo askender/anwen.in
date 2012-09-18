@@ -73,7 +73,7 @@ class UserhomeHandler(BaseHandler):
         user.user_say = markdown.markdown(user.user_say)
         likes = self.db.query("SELECT * FROM likes WHERE user_id = %s", user.user_id)
         likenum = len(likes)
-        user['gravatar'] = self.get_avatar(user.user_email,100)
+        user['gravatar'] = get_avatar(user.user_email,100)
         self.render("userhome.html", user=user,likenum=likenum)
 
     def post(self):
@@ -91,7 +91,7 @@ class UserlikeHandler(BaseHandler):
             likes[i]["title"] = share.title
             likes[i]['id'] = share.id
             likes[i]['type'] = share.sharetype
-        user['gravatar'] = self.get_avatar(user.user_email,100)
+        user['gravatar'] = get_avatar(user.user_email,100)
         self.render("userlike.html", user=user,likenum=likenum,likes=likes)
 
     def post(self):
@@ -103,7 +103,7 @@ class SettingHandler(BaseHandler):
         if self.current_user:
             user = self.get_user_bycookie()
             if not user: self.redirect("/")
-            user.gravatar = self.get_avatar(user.user_email,100)
+            user.gravatar = get_avatar(user.user_email,100)
             self.render("setting.html", user=user)
         else:
             self.redirect("/")
@@ -123,7 +123,7 @@ class ChangePassHandler(BaseHandler):
         if self.current_user:
             user = self.get_user_bycookie()
             if not user: self.redirect("/")
-            user.gravatar = self.get_avatar(user.user_email,100)
+            user.gravatar = get_avatar(user.user_email,100)
             self.render("changepass.html", user=user)
         else:
             self.redirect("/")
