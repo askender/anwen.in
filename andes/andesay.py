@@ -34,7 +34,9 @@ class AndeSay(object):
         self.zipcode = city_info.split('=')[1].split(',')[1].split('"')[3] #取出地址信息
         self.addr = city_info.split('=')[1].split(',')[2].split('"')[3] #取出地址信息
         self.provice = self.addr.split(u'省',1)[0].replace(' ','') #获取省份
-        self.city = self.addr.split(u'市')[0].split(u'省')[1].strip().replace(' ','') #获取城市
+        self.city = ''
+        if u'市' in self.addr:
+            self.city = self.addr.split(u'市')[0].split(u'省')[1].strip().replace(' ','') #获取城市
 
     def is_cn_char(self,i):
         return 0x4e00<=ord(i)<0x9fa6
