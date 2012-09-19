@@ -34,9 +34,9 @@ class AndeSay(object):
         self.zipcode = city_info.split('=')[1].split(',')[1].split('"')[3] #取出地址信息
         self.addr = city_info.split('=')[1].split(',')[2].split('"')[3] #取出地址信息
         self.provice = self.addr.split(u'省',1)[0].replace(' ','') #获取省份
-        self.city = ''
-        if u'市' in self.addr:
-            self.city = self.addr.split(u'市')[0].split(u'省')[1].strip().replace(' ','') #获取城市
+        # self.city = ''
+        # if u'市' in self.addr:
+        #     self.city = self.addr.split(u'市')[0].split(u'省')[1].strip().replace(' ','') #获取城市
 
     def is_cn_char(self,i):
         return 0x4e00<=ord(i)<0x9fa6
@@ -72,9 +72,9 @@ class AndeSay(object):
         userfenci = fenci.fenci(usersay)
         userfencij = json.loads(userfenci)
         is_cn = self.is_cn(usersay)
-        city = p.get_pinyin(self.city)
+        #city = p.get_pinyin(self.city)
 
-        andesay += sayweather(usersay,city)
+        #andesay += sayweather(usersay,city)
         andesay += sayhello(usersay)
         andesay += saysong(usersay)
 
@@ -87,7 +87,7 @@ class AndeSay(object):
             andesay += '<br/>'+p.get_pinyin(usersay)
             andesay += '<br/>'+self.ip+'<br/>'+self.zipcode+'<br/>'
             andesay += '<br/>'+self.addr
-            andesay += '<br/>'+self.provice+'<br/>'+self.city
+            andesay += '<br/>'+self.provice#+'<br/>'+self.city
         #status = userfenci['words'][0]['attr']
         #status += userfenci['words'][1]['attr']
         return andesay
