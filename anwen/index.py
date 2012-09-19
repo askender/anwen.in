@@ -2,8 +2,8 @@
 
 import tornado.escape
 
-import memcache
-mc = memcache.Client(['127.0.0.1:11211'], debug=0)
+# import memcache
+# mc = memcache.Client(['127.0.0.1:11211'], debug=0)
 
 from utils.fliter import *
 from utils.avatar import *
