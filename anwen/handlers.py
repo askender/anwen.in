@@ -8,6 +8,7 @@
 from .index import RedirectHandler, IndexHandler, SpecialHandler, NodeHandler
 from .user import LoginHandler, JoinusHandler, LogoutHandler, UserhomeHandler, UserlikeHandler, SettingHandler, ChangePassHandler, MemberHandler
 from .share import ShareHandler, EntryHandler, CommentHandler, LikeHandler, FeedHandler
+from .ande import AndeHandler
 from .chat import ChatHandler, MessageNewHandler, MessageUpdatesHandler
 from .chats import ChatsHandler, ChatSocketHandler
 
@@ -34,11 +35,14 @@ handlers = [
     (r"/joinus", JoinusHandler),
     (r"/logout", LogoutHandler),
     (r'/setting', SettingHandler), 
-    (r'/changepass', ChangePassHandler), 
+    (r'/changepass', ChangePassHandler),
+
+    (r'/ande', AndeHandler), 
 
     (r"/chat", ChatHandler),
     (r"/a/message/new", MessageNewHandler),
     (r"/a/message/updates", MessageUpdatesHandler),
+
     (r"/chats", ChatsHandler),
     (r"/chatsocket", ChatSocketHandler),
 

@@ -1,13 +1,15 @@
 # -*- coding:utf-8 -*-
 
 import tornado.escape
-from settings import *
-from base import *
-from utils.fliter import *
-from utils.avatar import *
 
 import memcache
 mc = memcache.Client(['127.0.0.1:11211'], debug=0)
+
+from utils.fliter import *
+from utils.avatar import *
+from settings import *
+from base import *
+
 
 
 class RedirectHandler(BaseHandler):

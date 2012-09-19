@@ -2,6 +2,7 @@
 import tornado.database
 import tornado.web
 
+from utils.avatar import *
 from base import *
 from settings import *
 

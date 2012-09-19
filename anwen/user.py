@@ -1,6 +1,8 @@
 # -*- coding:utf-8 -*-
 import hashlib
 import markdown
+
+from utils.avatar import *
 from base import *
 
 class LoginHandler(BaseHandler):
