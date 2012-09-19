@@ -58,6 +58,10 @@ class AndeSay(object):
                 return is_ascii
         return is_ascii
 
+    def get_ip(self):
+        get_ip = self.ip
+        return get_ip
+
 
     def get_andesay(self, usersay, splitter=''):
         andesay = ''
@@ -74,6 +78,7 @@ class AndeSay(object):
 
         debug = True
         if debug:
+            andesay += '<br/>ande-think-trace,it will remove'
             andesay += '<br/>'+self.is_cn(usersay)
             andesay += '<br/>'+self.is_ascii(usersay)
             andesay += '<br/>'+userfenci
