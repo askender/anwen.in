@@ -16,6 +16,12 @@ class RedirectHandler(BaseHandler):
     def get(self):
         pass
 
+
+class NotyetHandler(BaseHandler):
+    def get(self):
+        self.render("404.html")
+
+
 class IndexHandler(BaseHandler):
     def get(self):
         page = self.get_argument("page", "1")
@@ -42,7 +48,7 @@ class IndexHandler(BaseHandler):
         if membernum >20:
             membernum = 21
         for i in range(0,membernum):
-            user = self.get_user_byid(shares[i]['author_id'])
+            user = self.get_user_byid(members[i]['user_id'])
             members[i]['gravatar'] = get_avatar(user.user_email,35)
         self.render("index.html",shares=shares,members=members,sharesum=sharesum,page=page)
 
@@ -52,7 +58,9 @@ class SpecialHandler(BaseHandler):
         #host = self.request.headers['Host']
         realpath = self.request.path[1:]
         share = self.db.get("SELECT * FROM shares WHERE slug = %s",realpath)
-        if not share: raise tornado.web.HTTPError(404)
+        if not share: 
+            self.redirect("/404")
+            #raise tornado.web.HTTPError(404)
         comments = self.db.query("SELECT * FROM comments WHERE share_id = %s ORDER BY id DESC", share.id)
         commentnum = len(comments)
         for i in range(0,commentnum):
@@ -70,7 +78,9 @@ class NodeHandler(BaseHandler):
         sharesum = (sharesum+9)/10
         shares = self.db.query("SELECT * FROM shares where sharetype = %s ORDER BY published "
                                 "DESC LIMIT %s,10",node,(int(page)-1)*10)
-        if not shares: raise tornado.web.HTTPError(404)
+        if not shares:
+            self.redirect("/404")
+            #raise tornado.web.HTTPError(404)
         sharenum = len(shares)
         for i in range(0,sharenum):
             user = self.get_user_byid(shares[i]['author_id'])
@@ -84,6 +94,6 @@ class NodeHandler(BaseHandler):
         if membernum >20:
             membernum = 21
         for i in range(0,membernum):
-            user = self.get_user_byid(shares[i]['author_id'])
+            user = self.get_user_byid(members[i]['user_id'])
             members[i]['gravatar'] = get_avatar(user.user_email,35)
         self.render("node.html",shares=shares,members=members,sharesum=sharesum,page=page)

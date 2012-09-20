@@ -5,7 +5,7 @@
 # MODIFIED: 2012-09-18 22:01:17
 # DESCRIPTION: URL Route
 
-from .index import RedirectHandler, IndexHandler, SpecialHandler, NodeHandler
+from .index import RedirectHandler, NotyetHandler, IndexHandler, SpecialHandler, NodeHandler
 from .user import LoginHandler, JoinusHandler, LogoutHandler, UserhomeHandler, UserlikeHandler, SettingHandler, ChangePassHandler, MemberHandler
 from .share import ShareHandler, EntryHandler, CommentHandler, LikeHandler, FeedHandler
 from .ande import AndeHandler
@@ -14,6 +14,7 @@ from .chats import ChatsHandler, ChatSocketHandler
 
 handlers = [
     (r"/", IndexHandler),
+    (r"/404", NotyetHandler),
     (r"/about",SpecialHandler),
     (r"/changelog",SpecialHandler),
     (r"/help",SpecialHandler),

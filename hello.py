@@ -36,8 +36,8 @@ class Application(tornado.web.Application):
 
 
 def main():
-    #tornado.locale.load_translations(
-        #os.path.join(os.path.dirname(__file__), "_locale"))
+    tornado.locale.load_translations(
+        os.path.join(os.path.dirname(__file__), "_locale"))
     tornado.options.parse_command_line()
     http_server = tornado.httpserver.HTTPServer(Application(), xheaders=True)
     http_server.listen(options.port)
