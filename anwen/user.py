@@ -3,7 +3,7 @@ import hashlib
 import markdown
 
 from utils.avatar import *
-from base import *
+from base import BaseHandler
 
 class LoginHandler(BaseHandler):
     def get(self):

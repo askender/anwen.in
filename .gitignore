@@ -3,6 +3,7 @@
 *.md~
 settings.py
 maybe
+study
 
 config.py
 privekey.key

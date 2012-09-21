@@ -2,7 +2,7 @@
 import logging
 import tornado.escape
 import uuid
-from base import *
+from base import BaseHandler
 
 class ChatHandler(BaseHandler):
     def get(self):

@@ -8,7 +8,7 @@ import tornado.escape
 from utils.fliter import *
 from utils.avatar import *
 from settings import *
-from base import *
+from base import BaseHandler
 
 
 

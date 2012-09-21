@@ -1,16 +1,17 @@
 # -*- coding:utf-8 -*-
+
 import tornado.database
 import tornado.web
-
-from utils.avatar import *
-from base import *
-from settings import *
 
 import markdown
 import re
 import unicodedata
 import urllib2
 
+from utils.avatar import *
+from settings import *
+
+from base import BaseHandler
 
 class ShareHandler(BaseHandler):
     @tornado.web.authenticated

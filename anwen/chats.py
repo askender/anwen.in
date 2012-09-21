@@ -9,7 +9,7 @@ import tornado.escape
 import tornado.websocket
 import uuid
 
-from base import *
+from base import BaseHandler
 
 class ChatsHandler(BaseHandler):
     def get(self):

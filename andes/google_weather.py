@@ -16,7 +16,7 @@ class weather:
         else:
             try:
                 #使用ｍｉｎｉｄｏｍ初始化ｘｍｌ
-                 root = minidom.parseString(xml).documentElement
+                root = minidom.parseString(xml).documentElement
             except:
                 raise u'初始化xml是遇到错误，xml传输错误，或者google给的xml格式不标准'
             else:
