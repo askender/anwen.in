@@ -1,4 +1,6 @@
 *.pyc
+*.py~
+*.md~
 settings.py
 maybe
 
