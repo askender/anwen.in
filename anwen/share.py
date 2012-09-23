@@ -32,7 +32,8 @@ class ShareHandler(BaseHandler):
         html = markdown.markdown(text)
         if id:
             share = self.db.get("SELECT * FROM shares WHERE id = %s", int(id))
-            if not share: raise tornado.web.HTTPError(404)
+            if not share:
+                self.redirect("/404")
             self.db.execute(
                 "UPDATE shares SET title = %s, markdown = %s, html = %s,"
                 "sharetype = %s"
@@ -52,7 +53,8 @@ class ShareHandler(BaseHandler):
 class EntryHandler(BaseHandler):
     def get(self, id):
         share = self.db.get("SELECT * FROM shares WHERE id = %s", id)
-        if not share: raise tornado.web.HTTPError(404)
+        if not share:
+            self.redirect("/404")
         comments = self.db.query("SELECT * FROM comments WHERE share_id = %s ORDER BY id DESC", id)
         commentnum = len(comments)
         for i in range(0,commentnum):

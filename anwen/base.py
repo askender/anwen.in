@@ -1,14 +1,7 @@
 # -*- coding:utf-8 -*-
 
-import os.path
-import tornado.database
-import tornado.web
-import tornado.httpserver
-import tornado.ioloop
-import tornado.options
 import tornado.web
 
-# import code for encoding urls and generating md5 hashes
 
 class BaseHandler(tornado.web.RequestHandler):
     @property
@@ -21,7 +14,7 @@ class BaseHandler(tornado.web.RequestHandler):
         return tornado.escape.json_decode(user_json)
 
     def get_user_bycookie(self):
-        user=self.db.get("SELECT * FROM `users` WHERE `user_id`=%s", self.current_user["user_id"])
+        user=self.db.get("SELECT `user_id`,`user_name`,`user_email`,`user_domain` FROM `users` WHERE `user_id`=%s", self.current_user["user_id"])
         return user
 
     def get_user_byemail(self,userkey):
@@ -29,11 +22,11 @@ class BaseHandler(tornado.web.RequestHandler):
         return user
 
     def get_user_byid(self,userkey):
-        user=self.db.get("SELECT * FROM `users` WHERE `user_id`=%s", userkey)
+        user=self.db.get("SELECT `user_id`,`user_name`,`user_email`,`user_domain` FROM `users` WHERE `user_id`=%s", userkey)
         return user
 
     def get_user_bydomain(self,userkey):
-        user=self.db.get("SELECT * FROM `users` WHERE `user_domain`=%s", userkey)
+        user=self.db.get("SELECT `user_id`,`user_name`,`user_email`,`user_domain` FROM `users` WHERE `user_domain`=%s", userkey)
         return user
 
 

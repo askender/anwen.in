@@ -4,29 +4,15 @@ import string
 import urllib2
 import json
 
-import fenci
-from xpinyin import Pinyin
+from tool.fenci import fenci
+from tool.xpinyin import Pinyin
 from sayhello import *
 from sayweather import *
 from saysong import *
 
 
 class AndeSay(object):
-    """ande 的反馈
 
-    usage
-    -----
-    ::
-        In [1]: from andesay import AndeSay
-        In [2]: a = AndeSay()
-        In [3]: p.get_andesay(u"你好")
-        Out[3]: ''
-        In [4]: p.get_andethink(u"你")
-        Out[4]: ''
-    请输入utf8编码汉字
-
-    .. ande_ai: https://github.com/askender/ande_ai not open
-    """
 
     def __init__(self):
         city_info=urllib2.urlopen( 'http://pv.sohu.com/cityjson').read().decode('GBK')
@@ -69,7 +55,7 @@ class AndeSay(object):
         andesay = ''
 
         p = Pinyin()
-        userfenci = fenci.fenci(usersay)
+        userfenci = fenci(usersay)
         userfencij = json.loads(userfenci)
         is_cn = self.is_cn(usersay)
         #city = p.get_pinyin(self.city)

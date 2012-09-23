@@ -2,6 +2,8 @@
 import hashlib
 import markdown
 
+import tornado.escape
+
 from utils.avatar import *
 from base import BaseHandler
 
@@ -71,7 +73,8 @@ class LogoutHandler(BaseHandler):
 class UserhomeHandler(BaseHandler):
     def get(self, name):
         user = self.db.get("SELECT * FROM users WHERE user_domain = %s", name)
-        if not user: raise tornado.web.HTTPError(404)
+        if not user:
+            self.redirect("/404")
         user.user_say = markdown.markdown(user.user_say)
         likes = self.db.query("SELECT * FROM likes WHERE user_id = %s", user.user_id)
         likenum = len(likes)
@@ -85,7 +88,8 @@ class UserhomeHandler(BaseHandler):
 class UserlikeHandler(BaseHandler):
     def get(self, name):
         user = self.get_user_bydomain(name)
-        if not user: raise tornado.web.HTTPError(404)
+        if not user:
+            self.redirect("/404")            
         likes = self.db.query("SELECT * FROM likes WHERE user_id = %s", user.user_id)
         likenum = len(likes)
         for i in range(0,likenum):
