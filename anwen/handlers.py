@@ -1,9 +1,4 @@
 # -*- coding: utf-8 -*- 
-# AUTHOR: askender <askender43@gmail.com>
-# FILE: handlers.py
-# CREATED: 2012-08-28 17:53:10
-# MODIFIED: 2012-09-18 22:01:17
-# DESCRIPTION: URL Route
 
 from .index import RedirectHandler, NotyetHandler, IndexHandler, SpecialHandler, NodeHandler
 from .user import LoginHandler, JoinusHandler, LogoutHandler, UserhomeHandler, UserlikeHandler, SettingHandler, ChangePassHandler, MemberHandler

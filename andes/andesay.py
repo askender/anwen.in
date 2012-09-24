@@ -6,9 +6,9 @@ import json
 
 from tool.fenci import fenci
 from tool.xpinyin import Pinyin
-from sayhello import *
-from sayweather import *
-from saysong import *
+from sayhello import sayhello
+from sayweather import sayweather
+from saysong import saysong
 
 
 class AndeSay(object):

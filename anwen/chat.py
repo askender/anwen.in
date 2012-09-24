@@ -1,7 +1,9 @@
 # -*- coding:utf-8 -*-
+
 import logging
-import tornado.escape
 import uuid
+import tornado.escape
+
 from base import BaseHandler
 
 class ChatHandler(BaseHandler):

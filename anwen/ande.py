@@ -1,13 +1,11 @@
 # -*- coding:utf-8 -*-
 
-import tornado.web
-
 from base import BaseHandler
 from andes.andesay import AndeSay
 
 
 
-class AndeHandler(tornado.web.RequestHandler):
+class AndeHandler(BaseHandler):
     def get(self):
         self.render("ande.html")
 

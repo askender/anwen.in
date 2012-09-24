@@ -1,6 +1,7 @@
 tornado
 markdown
-python-MySQLdb
+MySQL-python
+peewee
 #Jinja2
 #SQLAlchemy
 #you can pip install -r requirements.txt

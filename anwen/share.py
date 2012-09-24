@@ -1,11 +1,8 @@
 # -*- coding:utf-8 -*-
 
-import tornado.database
 import tornado.web
 
 import markdown
-import re
-import unicodedata
 import urllib2
 
 from utils.avatar import *

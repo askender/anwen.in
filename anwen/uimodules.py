@@ -1,8 +1,9 @@
 #coding=utf-8
 
 import tornado.web
-from anwen.base import *
+
 from utils.avatar import *
+from base import BaseHandler
 
 class EntryModule(tornado.web.UIModule):
     def render(self, entry):
