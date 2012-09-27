@@ -1,14 +1,12 @@
 # -*- coding:utf-8 -*-
 
-import tornado.web
-
 import markdown
 import urllib2
-
+import tornado.web
 from utils.avatar import *
-from settings import *
-
 from base import BaseHandler
+from peewee import F
+from models import User, Share, Comment, Like
 
 class ShareHandler(BaseHandler):
     @tornado.web.authenticated
@@ -16,69 +14,66 @@ class ShareHandler(BaseHandler):
         id = self.get_argument("id", None)
         share = None
         if id:
-            share = self.db.get("SELECT * FROM shares WHERE id = %s", int(id))
-        self.render("share.html", share=share)
+            share = Share.get(id = id)
+            share.markdown = markdown.markdown(share.markdown)
+        self.render("share.html", share = share)
 
     @tornado.web.authenticated
     def post(self):
         id = self.get_argument("id", None)
         title = self.get_argument("title")
         tag = self.get_argument("tag",None)
-        text = self.get_argument("markdown")
+        markdown = self.get_argument("markdown")
         sharetype = self.get_argument("type")
-        html = markdown.markdown(text)
         if id:
-            share = self.db.get("SELECT * FROM shares WHERE id = %s", int(id))
-            if not share:
+            try:
+                share = Share.get(id = id)
+            except:
                 self.redirect("/404")
-            self.db.execute(
-                "UPDATE shares SET title = %s, markdown = %s, html = %s,"
-                "sharetype = %s"
-                "WHERE id = %s", title, text, html,sharetype,int(id))
+            share = Share.update(title = title,
+                                markdown = markdown,
+                                sharetype = sharetype
+                ).where(id = id).execute()
         else:
-            share_id = self.db.execute(
-                "INSERT INTO shares (author_id,title,markdown,html,sharetype,"
-                "published) VALUES (%s,%s,%s,%s,%s,UTC_TIMESTAMP())",
-                self.current_user["user_id"], title, text, html,sharetype)
-            self.db.execute(
-                "UPDATE users SET user_leaf = user_leaf+10 "
-                "WHERE user_id = %s", self.current_user["user_id"])
-            id = str(share_id)
+            share = Share.create(title = title,
+                                markdown = markdown,
+                                sharetype = sharetype,
+                                user_id = self.current_user["user_id"],
+                )
+            user = User.update(user_leaf = F('user_leaf') +10).where(id = self.current_user["user_id"]).execute()
+            id = str(share.id)
         self.redirect("/share/" + str(id))
 
 
 class EntryHandler(BaseHandler):
     def get(self, id):
-        share = self.db.get("SELECT * FROM shares WHERE id = %s", id)
-        if not share:
+        try:
+            share = Share.get(id = id)
+        except:
             self.redirect("/404")
-        comments = self.db.query("SELECT * FROM comments WHERE share_id = %s ORDER BY id DESC", id)
-        commentnum = len(comments)
-        for i in range(0,commentnum):
-            user = self.get_user_byid(comments[i]['author_id'])
-            comments[i]["name"] = user.user_name
-            comments[i]['domain'] = user.user_domain
-            comments[i]['gravatar'] = get_avatar(user.user_email,50)
+        comments = Comment.select().where(share_id=share.id)
+        for comment in comments:
+            user = User.get(id = comment.user_id)
+            comment.name = user.user_name
+            comment.domain = user.user_domain
+            comment.gravatar = get_avatar(user.user_email,50)
         self.render("sharee.html", share=share,comments=comments)
 
 
 class CommentHandler(BaseHandler):
     def post(self):
-        uri = self.request.body
-        mydict = {}
-        for i in uri.split('&'):
-            data = i.split('=')
-            mydict[data[0]]=data[1]
-        html = urllib2.unquote(str(mydict['commentbody'])).decode("utf-8")
-        html = markdown.markdown(html)
-        comment_id = self.db.execute(
-                "INSERT INTO comments (author_id,share_id,commentbody,"
-                "commenttime) VALUES (%s,%s,%s,UTC_TIMESTAMP())",
-                self.current_user["user_id"], mydict['share_id'], html)
+        commentbody = self.get_argument("commentbody",None)
+        share_id = self.get_argument("share_id",None)
+        commentbody = urllib2.unquote(str(commentbody)).decode("utf-8")
+        html = markdown.markdown(commentbody)
+        comment_id = Comment.create(user_id = self.current_user["user_id"],
+                                    share_id = share_id,
+                                    commentbody = commentbody
+                                    )
         name = tornado.escape.xhtml_escape(self.current_user["user_name"])
         email = tornado.escape.xhtml_escape(self.current_user["user_email"])
         domain = tornado.escape.xhtml_escape(self.current_user["user_domain"])
-        gravatar = get_avatar(user.user_email,50)
+        gravatar = get_avatar(self.current_user["user_email"],50)
         newcomment = ''
         newcomment += ' <div class="comment">'
         newcomment += '<div class="avatar">'
@@ -87,39 +82,24 @@ class CommentHandler(BaseHandler):
         newcomment += '<div class="name">'+name+'</div>'
         newcomment += '<div class="date" title="at"></div>'
         newcomment += html
-        #newcomment += '<p>'+mydict['commentbody']+'</p>'
         newcomment += '</div>'
         self.write(newcomment)
 
 class LikeHandler(BaseHandler):
     def post(self):
-        uri = self.request.body
-        mydict = {}
-        for i in uri.split('&'):
-            data = i.split('=')
-            mydict[data[0]]=data[1]
-        like_id = self.db.execute(
-                "INSERT INTO likes (user_id,share_id,"
-                "liketime) VALUES (%s,%s,UTC_TIMESTAMP())",
-                self.current_user["user_id"], mydict['share_id'])
-        like_share = self.db.execute(
-                "UPDATE shares SET likes = likes+1 "
-                "WHERE id = %s", mydict['share_id'])
-        self.db.execute(
-                "UPDATE users SET user_leaf = user_leaf+1 "
-                "WHERE user_id = %s", self.current_user["user_id"])
-        self.db.execute(
-                "UPDATE users SET user_leaf = user_leaf+2 "
-                "WHERE user_id = %s", self.current_user["user_id"])
-        likenum = int(mydict['share_likes']) + 1
-        #name = tornado.escape.xhtml_escape(self.current_user["user_name"])
+        share_id = self.get_argument("share_id",None)
+        likenum = self.get_argument("likenum",0)
+        like_id = Like.create(user_id = self.current_user["user_id"],
+                            share_id = share_id
+                            )
+        like_share = Share.update(likenum = F('likenum')+1).where(id = share_id).execute()
+        likenum = int(likenum) + 1
         newlikes = ':) ' + str(likenum)
         self.write(newlikes)
 
 
 class FeedHandler(BaseHandler):
     def get(self):
-        shares = self.db.query("SELECT * FROM shares ORDER BY published "
-                                "DESC LIMIT 10")
+        shares = Share.select()
         self.set_header("Content-Type", "application/atom+xml")
         self.render("feed.xml", shares=shares)

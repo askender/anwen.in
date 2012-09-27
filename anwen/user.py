@@ -7,6 +7,7 @@ import tornado.escape
 
 from utils.avatar import *
 from base import BaseHandler
+from models import User, Share, Like
 
 class LoginHandler(BaseHandler):
     def get(self):
@@ -20,18 +21,22 @@ class LoginHandler(BaseHandler):
         if not self.request.headers.get("Cookie"):  
             self.render("require_enable_cookie.html")  
             return
-        email=self.get_argument("email",'')
-        password=self.get_argument("password",'')
-        user=self.get_user_byemail(email)
-        if not user:
-            self.write('User unfound.')
+        email = self.get_argument("email",'')
+        password = self.get_argument("password",'')
+        try:
+            u = User.get(
+                user_email=email,
+                user_pass=hashlib.md5(password).hexdigest()
+            )
+        except User.DoesNotExist:
+            self.write('密码错误或用户不存在，请重新注册或登录')
         else:
-            if user['user_pass']==hashlib.md5(password).hexdigest():
-                del user['user_pass'] #user.pop('user_pass')
-                self.set_secure_cookie("user", tornado.escape.json_encode(user))
-                self.redirect(self.get_argument("next", "/"))
-            else:
-                self.write('Wrong password')
+            user = {'user_id':u.id,
+                    'user_name':u.user_name,
+                    'user_email':u.user_email,
+                    'user_domain':u.user_domain}
+            self.set_secure_cookie("user", tornado.escape.json_encode(user))
+            self.redirect(self.get_argument("next", "/"))
 
 
 class JoinusHandler(BaseHandler):
@@ -45,17 +50,23 @@ class JoinusHandler(BaseHandler):
         if not self.request.headers.get("Cookie"):  
             self.render("require_enable_cookie.html")  
             return
-        name=self.get_argument("name",'')
-        password=self.get_argument("password",'')
-        password=hashlib.md5(password).hexdigest()
-        email=self.get_argument("email",'')
-        domain=self.get_argument("domain",'')
-        user=self.get_user_byemail(email)
-        if not user:
-            user_id = self.db.execute(
-                "INSERT INTO users (user_email,user_name,user_pass,user_domain) VALUES (%s,%s,%s,%s)",
-                email, name, password,domain)
-            user=self.get_user_byid(user_id)
+        name = self.get_argument("name",'')
+        password = self.get_argument("password",'')
+        password = hashlib.md5(password).hexdigest()
+        email = self.get_argument("email",'')
+        domain = self.get_argument("domain",'')
+        try:
+            user = User.get(user_email = email)
+        except:
+            u = User.create(user_name = name,
+                            user_pass = password,
+                            user_email = email,
+                            user_domain = domain,
+                )
+            user = {'user_id':u.id,
+                    'user_name':u.user_name,
+                    'user_email':u.user_email,
+                    'user_domain':u.user_domain}
             self.set_secure_cookie("user", tornado.escape.json_encode(user))
             self.redirect(self.get_argument("next", "/"))
         else:
@@ -73,14 +84,14 @@ class LogoutHandler(BaseHandler):
 
 class UserhomeHandler(BaseHandler):
     def get(self, name):
-        user = self.db.get("SELECT * FROM users WHERE user_domain = %s", name)
-        if not user:
+        try:
+            user = User.get(user_domain = name)
+        except:
             self.redirect("/404")
         user.user_say = markdown.markdown(user.user_say)
-        likes = self.db.query("SELECT * FROM likes WHERE user_id = %s", user.user_id)
-        likenum = len(likes)
-        user['gravatar'] = get_avatar(user.user_email,100)
-        self.render("userhome.html", user=user,likenum=likenum)
+        likenum = Like.select().where(user_id=user.id).count()
+        user.gravatar = get_avatar(user.user_email,100)
+        self.render("userhome.html", user = user,likenum = likenum)
 
     def post(self):
         self.get()
@@ -88,18 +99,19 @@ class UserhomeHandler(BaseHandler):
 
 class UserlikeHandler(BaseHandler):
     def get(self, name):
-        user = self.get_user_bydomain(name)
-        if not user:
-            self.redirect("/404")            
-        likes = self.db.query("SELECT * FROM likes WHERE user_id = %s", user.user_id)
-        likenum = len(likes)
-        for i in range(0,likenum):
-            share = self.db.get("SELECT * FROM `shares` WHERE `id`=%s", likes[i]['share_id'])
-            likes[i]["title"] = share.title
-            likes[i]['id'] = share.id
-            likes[i]['type'] = share.sharetype
-        user['gravatar'] = get_avatar(user.user_email,100)
-        self.render("userlike.html", user=user,likenum=likenum,likes=likes)
+        try:
+            user = User.get(user_domain=name)
+        except:
+            self.redirect("/404")          
+        likes = Like.select().where(user_id=user.id)
+        likenum = likes.count()
+        for like in likes:
+            share = Share.get(id=like.share_id)
+            like.title = share.title
+            like.id = share.id
+            likes.type = share.sharetype
+        user.gravatar = get_avatar(user.user_email,100)
+        self.render("userlike.html", user = user,likenum = likenum,likes = likes)
 
     def post(self):
         self.get()
@@ -108,45 +120,46 @@ class UserlikeHandler(BaseHandler):
 class SettingHandler(BaseHandler):
     def get(self):
         if self.current_user:
-            user = self.get_user_bycookie()
-            if not user: self.redirect("/")
+            user = User.get(id=self.current_user["user_id"])
+            if not user:
+                self.redirect("/")
             user.gravatar = get_avatar(user.user_email,100)
-            self.render("setting.html", user=user)
+            self.render("setting.html", user = user)
         else:
             self.redirect("/")
 
     def post(self):
-        name = self.get_argument("name",'')
-        city = self.get_argument("city",'')
-        say = self.get_argument("say",'')
-        self.db.execute(
-                "UPDATE users SET user_name = %s,user_city = %s,user_say = %s "
-                "WHERE user_id = %s", name,city,say,self.current_user["user_id"])
+        name = self.get_argument("name",None)
+        city = self.get_argument("city",None)
+        say = self.get_argument("say",None)
+        user = User.update(user_name=name,
+                    user_city=city,
+                    user_say=say
+                    ).where(id=self.current_user["user_id"]).execute()
         self.redirect("/setting")
 
 
 class ChangePassHandler(BaseHandler):
     def get(self):
         if self.current_user:
-            user = self.get_user_bycookie()
-            if not user: self.redirect("/")
+            user = User.get(id=self.current_user["user_id"])
+            if not user:
+                self.redirect("/")
             user.gravatar = get_avatar(user.user_email,100)
-            self.render("changepass.html", user=user)
+            self.render("changepass.html", user = user)
         else:
             self.redirect("/")
 
     def post(self):
-        oldpass=self.get_argument("oldpass",'')
-        newpass=self.get_argument("newpass",'')
-        newpass=hashlib.md5(newpass).hexdigest()
-        user=self.get_user_bycookie()
+        oldpass = self.get_argument("oldpass",'')
+        newpass = self.get_argument("newpass",'')
+        newpass = hashlib.md5(newpass).hexdigest()
+        user = self.get_user_bycookie()
         if not user:
             self.write('User unfound.')
         else:
-            if user['user_pass']==hashlib.md5(oldpass).hexdigest():
-                self.db.execute(
-                "UPDATE users SET user_pass = %s "
-                "WHERE user_id = %s", newpass,self.current_user["user_id"])
+            if user.user_pass == hashlib.md5(oldpass).hexdigest():
+                User.update(user_pass = newpass).where(id=elf.current_user["user_id"]).execute()
                 self.redirect("/setting")
             else:
                 self.write('Wrong password')
@@ -154,6 +167,5 @@ class ChangePassHandler(BaseHandler):
 
 class MemberHandler(BaseHandler):
     def get(self):
-        members = self.db.query("SELECT `user_id`,`user_name`,`user_email` FROM `users` ORDER BY user_id "
-                                "DESC LIMIT 50")
-        self.render("member.html", members=members)
+        members = User.select()
+        self.render("member.html", members = members)

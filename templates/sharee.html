@@ -19,16 +19,16 @@
 					{{ locale.format_date(share.published, full_format=True, shorter=True) }}
 				</div>
 				<div class="body">
-					{{ share.html }}
+					{{ share.markdown }}
 				</div>
 				{% if current_user %}
 				<div class="span3">
 					<form id="likeit" class="pull-right">
 						{{ xsrf_form_html() }}
-						<input type="hidden" name="share_id" id="share_id" value="{{ share.id }}"/>
-						<input type="hidden" name="share_likes" id="share_likes" value="{{ share.likes }}"/>
-						<input type='submit' id="like" class="btn btn-info" value='喜欢({{ share.likes }})' ></form>
-					{% if current_user["user_id"]==share.author_id %}
+						<input type="hidden" name="id" id="id" value="{{ share.id }}"/>
+						<input type="hidden" name="likenum" id="likenum" value="{{ share.likenum }}"/>
+						<input type='submit' id="like" class="btn btn-info" value='喜欢({{ share.likenum }})' ></form>
+					{% if current_user["user_id"]==share.user_id %}
 					<a href="/share?id={{ share.id }}">
 						<button class="btn btn-success" >
 							编辑本文

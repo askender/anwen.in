@@ -1,6 +1,7 @@
 # -*- coding:utf-8 -*-
 
 from base import BaseHandler
+from models import Ande
 from andes.andesay import AndeSay
 
 
@@ -17,13 +18,10 @@ class AndeHandler(BaseHandler):
         if self.current_user:
             user_id = self.current_user["user_id"]
         if not user_id:
-            user_id = a.get_ip().replace('.', '')
-        # log_id = self.db.execute(
-        #     "INSERT INTO ande (user_id,usersay,andesay, "
-        #     "chattime) VALUES (%s,%s,%s,UTC_TIMESTAMP())",
-        #     user_id, usersay, andesay)
-        debug = True
-        # if debug:
-        #     andesay += '<br/>'+user()
-        #andesay += usersay
+            user_id = a.user_ip().replace('.', '')
+        log = Ande.create(
+                        user_id = '1',
+                        usersay = usersay,
+                        andesay = andesay,
+                    )
         self.write(andesay)

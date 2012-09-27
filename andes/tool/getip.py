@@ -2,9 +2,14 @@
 # -*- coding: utf-8 -*- 
 
 import urllib
-import json
+
+def user_ip():
+    user_ip += urllib.urlopen('http://ifconfig.me/ip').read()
+    return user_ip
 
 
-ipinfo = urllib.urlopen('http://ifconfig.me/ip').read()
+def main():
+    print user_ip()
 
-print ipinfo
+if __name__ == '__main__':
+    main()

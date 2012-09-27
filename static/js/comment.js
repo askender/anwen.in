@@ -61,7 +61,7 @@ $(function() {
 			preAllow = false;
 			var flag = 1; //定义一个变量，当下面的一些检查发现问题会置0，这样就不会发送post请求了
 			var share_id = encodeURI(encodeURI($("#share_id").val()));
-			var share_likes = encodeURI(encodeURI($("#share_likes").val()));
+			var likenum = encodeURI(encodeURI($("#likenum").val()));
 			var argsxsrf = getCookie("_xsrf");
 			if (flag) {
 				$('#like').val('感谢您的喜欢，努力提交中..');
@@ -73,7 +73,7 @@ $(function() {
 					//data: {"html":htmlElement,"table":tableElement,"sender":senderElement,"head":headElement,"senderid":senderidElement},  //传送的dict数据
 					data: {
 						"share_id": share_id,
-						"share_likes": share_likes,
+						"likenum": likenum,
 						"_xsrf": argsxsrf
 					},
 					//传送的dict数据

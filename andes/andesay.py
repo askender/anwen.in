@@ -1,6 +1,7 @@
 # -*- coding:utf-8 -*-
 
 import string
+import urllib
 import urllib2
 import json
 
@@ -24,6 +25,11 @@ class AndeSay(object):
         # if u'市' in self.addr:
         #     self.city = self.addr.split(u'市')[0].split(u'省')[1].strip().replace(' ','') #获取城市
 
+
+    def user_ip(self):
+        user_ip = urllib.urlopen('http://ifconfig.me/ip').read()
+        return user_ip
+
     def is_cn_char(self,i):
         return 0x4e00<=ord(i)<0x9fa6
 
@@ -46,10 +52,6 @@ class AndeSay(object):
                 return is_ascii
         return is_ascii
 
-    def get_ip(self):
-        get_ip = self.ip
-        return get_ip
-
 
     def get_andesay(self, usersay, splitter=''):
         andesay = ''
@@ -64,16 +66,21 @@ class AndeSay(object):
         andesay += sayhello(usersay)
         andesay += saysong(usersay)
 
-        debug = True
-        if debug:
-            andesay += '<br/>ande-think-trace,it will remove'
-            andesay += '<br/>'+self.is_cn(usersay)
-            andesay += '<br/>'+self.is_ascii(usersay)
-            andesay += '<br/>'+userfenci
-            andesay += '<br/>'+p.get_pinyin(usersay)
-            andesay += '<br/>'+self.ip+'<br/>'+self.zipcode+'<br/>'
-            andesay += '<br/>'+self.addr
-            andesay += '<br/>'+self.provice#+'<br/>'+self.city
+        andethink = ''
+        andethink += '<br/>ande-think-trace,it will remove'
+        andethink += '<br/>'+self.user_ip()
+        andethink += '<br/>'+self.is_cn(usersay)
+        andethink += '<br/>'+self.is_ascii(usersay)
+        andethink += '<br/>'+userfenci
+        andethink += '<br/>'+p.get_pinyin(usersay)
+        andethink += '<br/>'+self.ip+'<br/>'+self.zipcode+'<br/>'
+        andethink += '<br/>'+self.addr
+        andethink += '<br/>'+self.provice#+'<br/>'+self.city
         #status = userfenci['words'][0]['attr']
         #status += userfenci['words'][1]['attr']
+
+        debug = True # True False
+        if debug:
+            andesay += andethink
+
         return andesay

@@ -42,6 +42,10 @@ handlers = [
     (r"/chats", ChatsHandler),
     (r"/chatsocket", ChatSocketHandler),
 
+    # (r"/theme/(.+)", tornado.web.StaticFileHandler, dict(path=settings['theme_path']), name='theme_path'),
+    # (r"/upload/(.+)", tornado.web.StaticFileHandler, dict(path=settings['upload_path']), name='upload_path')
+
+    # Custom 404 ErrorHandler
     (r'/(.*)', RedirectHandler),  # always put this at last
 
 ]
