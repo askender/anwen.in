@@ -1,6 +1,6 @@
 # -*- coding:utf-8 -*-
 
-
+import markdown
 from utils.fliter import *
 from utils.avatar import *
 from base import BaseHandler
@@ -28,6 +28,7 @@ class IndexHandler(BaseHandler):
             user = User.get(id = share.user_id)
             share.name = user.user_name
             share.domain = user.user_domain
+            share.markdown = markdown.markdown(share.markdown)
             share.markdown = filter_tags(share.markdown)[:100]
             share.gravatar = get_avatar(user.user_email,16)
         members = User.select().order_by('id').paginate(1, 20)

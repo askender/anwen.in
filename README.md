@@ -12,7 +12,7 @@ create and share something nice
 * 项目网址：[安问](http://i.askender.com/) anwen.in暂时由于shibada无法访问
 * 加入人工智能[安德·alpha](http://i.askender.com/ande) 原有能力近期恢复
 * 更多信息可参考:[关于安问](http://i.askender.com/about) [安德日记](http://i.askender.com/andelog)
-* 构建于tornado&peewee&sqlite，欢迎大家批评指正，askender43@gmail.com
+* 构建于tornado&peewee&mysql，欢迎大家批评指正，askender43@gmail.com
 * V-0.0.2
 
 接下来会做的:
