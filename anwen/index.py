@@ -21,7 +21,7 @@ class IndexHandler(BaseHandler):
     def get(self):
         page = self.get_argument("page", "1")
         realpage = int(page)
-        shares = Share.select().order_by('id').paginate(realpage, 10)
+        shares = Share.select().order_by(('id','desc')).paginate(realpage, 10)
         sharesum = shares.count()
         pagesum = (sharesum+9)/10
         for share in shares:

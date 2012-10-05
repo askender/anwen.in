@@ -2,6 +2,7 @@
 
 import markdown
 import urllib2
+import datetime
 import tornado.web
 from utils.avatar import *
 from base import BaseHandler
@@ -15,7 +16,7 @@ class ShareHandler(BaseHandler):
         share = None
         if id:
             share = Share.get(id = id)
-            share.markdown = markdown.markdown(share.markdown)
+            #share.markdown = markdown.markdown(share.markdown)
         self.render("share.html", share = share)
 
     @tornado.web.authenticated
@@ -32,8 +33,9 @@ class ShareHandler(BaseHandler):
                 self.redirect("/404")
             share = Share.update(title = title,
                                 markdown = markdown,
-                                sharetype = sharetype
-                ).where(id = id).execute()
+                                sharetype = sharetype,
+                                updated = datetime.datetime.now()
+                            ).where(id = id).execute()
         else:
             share = Share.create(title = title,
                                 markdown = markdown,
@@ -49,6 +51,7 @@ class EntryHandler(BaseHandler):
     def get(self, id):
         try:
             share = Share.get(id = id)
+            share.markdown = markdown.markdown(share.markdown)
         except:
             self.redirect("/404")
         comments = Comment.select().where(share_id=share.id)
