@@ -8,11 +8,7 @@ import tornado.web
 anwen_db = MySQLDatabase('anwen-test', user='root',passwd='')
 #anwen_db = SqliteDatabase('anwentest.db')
 
-try:
-    import dev_db
-    print('dev_db import success')
-except ImportError:
-    pass
+
 
 class AnwenModel(Model):
     """A base model that will use database"""
