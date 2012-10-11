@@ -1,8 +1,28 @@
+# This requirements is for development
+# You can: pip install -r requirements.txt
+
 tornado
+#Flask
 markdown
+
+#Jinja2
+#misaka
+#pygments
+
+# database
 MySQL-python
 peewee
-#Jinja2
 #SQLAlchemy
-#you can pip install -r requirements.txt
 
+# cache support
+#python-memcached
+
+# form support
+#-e hg+https://bitbucket.org/simplecodes/wtforms#egg=WTForms
+
+# mail support
+#Flask-Mail
+#tornadomail
+
+# testing
+#nose

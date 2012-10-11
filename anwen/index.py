@@ -42,6 +42,7 @@ class SpecialHandler(BaseHandler):
     def get(self):
         realpath = self.request.path[1:]
         share = Share.get(slug = realpath)
+        share.markdown = markdown.markdown(share.markdown)
         if not share: 
             self.redirect("/404")
         comments = Comment.select().where(share_id=share.id)

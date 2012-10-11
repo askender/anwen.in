@@ -17,7 +17,6 @@ class Application(tornado.web.Application):
     def __init__(self):
         config.update(dict(
             ui_modules={"Entry": EntryModule,"Useradmin": UseradminModule},
-            #autoescape = None
         ))
         tornado.web.Application.__init__(self, handlers, **config)
 
