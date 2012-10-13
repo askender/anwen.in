@@ -27,7 +27,12 @@
 						{{ xsrf_form_html() }}
 						<input type="hidden" name="id" id="id" value="{{ share.id }}"/>
 						<input type="hidden" name="likenum" id="likenum" value="{{ share.likenum }}"/>
-						<input type='submit' id="like" class="btn btn-info" value='喜欢({{ share.likenum }})' ></form>
+						{% if current_user %}
+							<input type='submit' id="like" class="btn btn-info disabled" value='喜欢中({{ share.likenum }})' />
+						{% else %}
+							<input type='submit' id="like" class="btn btn-info" value='喜欢({{ share.likenum }})' />
+						{% end %}
+					</form>
 					{% if current_user["user_id"]==share.user_id %}
 					<a href="/share?id={{ share.id }}">
 						<button class="btn btn-success" >
@@ -79,7 +84,7 @@
 						<label for="commentbody">
 							评论：
 						</label>
-						<textarea name="commentbody" id="commentbody" cols="20" rows="5"></textarea>
+						<textarea name="commentbody" id="commentbody" rows="5" cols="40" autocomplete="off"></textarea>
 						<input type="submit" id="submit" value="提交" />
 					</div>
 					<input type="hidden" name="share_id" id="share_id" value="{{ share.id }}"/>
@@ -91,6 +96,5 @@
 {% end %}
 
 {% block bottom %}
-<script src="{{ static_url("js/jquery-1.7.2.min.js") }}" type="text/javascript"></script>
 <script src="{{ static_url("js/comment.js") }}" type="text/javascript"></script>
 {% end %}

@@ -103,13 +103,13 @@ class UserlikeHandler(BaseHandler):
             user = User.get(user_domain=name)
         except:
             self.redirect("/404")          
-        likes = Like.select().where(user_id=user.id)
+        likes = Like.select().where(user_id=user.id).order_by(('id','desc'))
         likenum = likes.count()
         for like in likes:
             share = Share.get(id=like.share_id)
             like.title = share.title
             like.id = share.id
-            likes.type = share.sharetype
+            like.type = share.sharetype
         user.gravatar = get_avatar(user.user_email,100)
         self.render("userlike.html", user = user,likenum = likenum,likes = likes)
 

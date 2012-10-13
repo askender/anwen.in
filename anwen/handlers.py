@@ -3,6 +3,7 @@
 from .index import RedirectHandler, NotyetHandler, IndexHandler, SpecialHandler, NodeHandler
 from .user import LoginHandler, JoinusHandler, LogoutHandler, UserhomeHandler, UserlikeHandler, SettingHandler, ChangePassHandler, MemberHandler
 from .share import ShareHandler, EntryHandler, CommentHandler, LikeHandler, FeedHandler
+from .suggest import LikesuggestHandler,DislikesuggestHandler
 from .ande import AndeHandler
 from .chat import ChatHandler, MessageNewHandler, MessageUpdatesHandler
 from .chats import ChatsHandler, ChatSocketHandler
@@ -26,6 +27,9 @@ handlers = [
     (r"/sharelike", LikeHandler),
     (r"/share/([^/]+)", EntryHandler),
     (r"/feed", FeedHandler),
+
+    (r"/likesuggest", LikesuggestHandler),
+    (r"/dislikesuggest", DislikesuggestHandler),
 
     (r"/login", LoginHandler),
     (r"/joinus", JoinusHandler),

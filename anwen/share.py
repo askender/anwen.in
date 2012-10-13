@@ -60,6 +60,8 @@ class EntryHandler(BaseHandler):
             comment.name = user.user_name
             comment.domain = user.user_domain
             comment.gravatar = get_avatar(user.user_email,50)
+        user_like_this = Like.select().where(share_id=share.id,user_id=self.current_user["user_id"]).count()
+        print(user_like_this)
         self.render("sharee.html", share=share,comments=comments)
 
 
@@ -67,7 +69,6 @@ class CommentHandler(BaseHandler):
     def post(self):
         commentbody = self.get_argument("commentbody",None)
         share_id = self.get_argument("share_id",None)
-        commentbody = urllib2.unquote(str(commentbody)).decode("utf-8")
         html = markdown.markdown(commentbody)
         comment_id = Comment.create(user_id = self.current_user["user_id"],
                                     share_id = share_id,
@@ -95,7 +96,10 @@ class LikeHandler(BaseHandler):
         like_id = Like.create(user_id = self.current_user["user_id"],
                             share_id = share_id
                             )
+        share = Share.get(id = share_id)
         like_share = Share.update(likenum = F('likenum')+1).where(id = share_id).execute()
+        user_leaf = User.update(user_leaf = F('user_leaf')+4).where(id = share.user).execute()
+        user_leaf = User.update(user_leaf = F('user_leaf')+2).where(id = self.current_user["user_id"]).execute()
         likenum = int(likenum) + 1
         newlikes = ':) ' + str(likenum)
         self.write(newlikes)
