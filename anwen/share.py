@@ -60,8 +60,8 @@ class EntryHandler(BaseHandler):
             comment.name = user.user_name
             comment.domain = user.user_domain
             comment.gravatar = get_avatar(user.user_email,50)
-        user_like_this = Like.select().where(share_id=share.id,user_id=self.current_user["user_id"]).count()
-        print(user_like_this)
+        #user_like_this = Like.select().where(share_id=share.id,user_id=self.current_user["user_id"]).count()
+        #print(user_like_this)
         self.render("sharee.html", share=share,comments=comments)
 
 

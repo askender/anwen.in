@@ -43,7 +43,6 @@ $(function() {
 	$("#likeit").submit(function(e)
 	{
 		e.preventDefault();
-		alert('11');
 		if (preAllow) {
 			preAllow = false;
 			var flag = 1;

@@ -1,5 +1,8 @@
-
-.navbar-inner {
+body {
+padding-top: 60px;
+padding-bottom: 40px;
+}
+.navbar-inner1 {
 	padding-left: 20px;
 	padding-right: 20px;
 	background-color: #1a94c9;
