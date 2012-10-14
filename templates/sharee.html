@@ -27,8 +27,8 @@
 						{{ xsrf_form_html() }}
 						<input type="hidden" name="id" id="id" value="{{ share.id }}"/>
 						<input type="hidden" name="likenum" id="likenum" value="{{ share.likenum }}"/>
-						{% if current_user %}
-							<input type='submit' id="like" class="btn btn-info disabled" value='喜欢中({{ share.likenum }})' />
+						{% if share.is_liking %}
+							<input type='submit' id="like" class="btn btn-info disabled"  disabled="disabled" value='喜欢({{ share.likenum }})' />
 						{% else %}
 							<input type='submit' id="like" class="btn btn-info" value='喜欢({{ share.likenum }})' />
 						{% end %}
@@ -46,7 +46,7 @@
 				<a href="/login?next={{ url_escape(request.uri) }}" class="btn btn-primary">
 					登录
 				</a>
-				后回复方可回复, 如果你还没有账号你可以
+				后回复方可回复或收藏和个性化推荐, 如果还没有账号您可以
 				<a href="/joinus?next={{ url_escape(request.uri) }}" class="btn btn-danger">
 					注册
 				</a>
@@ -77,6 +77,7 @@
 			</div>
 			{% end %}
 {% end %}
+{% if current_user %}
 			<div id="addCommentContainer">
 				<form id="addCommentForm"  >
 					{{ xsrf_form_html() }}
@@ -90,6 +91,7 @@
 					<input type="hidden" name="share_id" id="share_id" value="{{ share.id }}"/>
 				</form>
 			</div>
+{% end %}
 		</div>
 	</div>
 </div>

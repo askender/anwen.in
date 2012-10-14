@@ -16,7 +16,6 @@ class ShareHandler(BaseHandler):
         share = None
         if id:
             share = Share.get(id = id)
-            #share.markdown = markdown.markdown(share.markdown)
         self.render("share.html", share = share)
 
     @tornado.web.authenticated
@@ -52,6 +51,8 @@ class EntryHandler(BaseHandler):
         try:
             share = Share.get(id = id)
             share.markdown = markdown.markdown(share.markdown)
+            if self.current_user:
+                share.is_liking = Like.select().where(share_id=share.id,user_id=self.current_user["user_id"]).count()>0
         except:
             self.redirect("/404")
         comments = Comment.select().where(share_id=share.id)
@@ -60,8 +61,7 @@ class EntryHandler(BaseHandler):
             comment.name = user.user_name
             comment.domain = user.user_domain
             comment.gravatar = get_avatar(user.user_email,50)
-        #user_like_this = Like.select().where(share_id=share.id,user_id=self.current_user["user_id"]).count()
-        #print(user_like_this)
+        hit = Share.update(hitnum = F('hitnum') +1).where(id = id).execute()
         self.render("sharee.html", share=share,comments=comments)
 
 
@@ -74,6 +74,7 @@ class CommentHandler(BaseHandler):
                                     share_id = share_id,
                                     commentbody = commentbody
                                     )
+        comment = Share.update(commentnum = F('commentnum') +1).where(id = share_id).execute()
         name = tornado.escape.xhtml_escape(self.current_user["user_name"])
         email = tornado.escape.xhtml_escape(self.current_user["user_email"])
         domain = tornado.escape.xhtml_escape(self.current_user["user_domain"])

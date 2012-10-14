@@ -47,6 +47,11 @@ class User(AnwenModel):
             to_user=user
         ).exists()
 
+    def is_liking(self, share_id):
+        return Like.select().filter(
+            user_id=self,
+            share_id=share_id
+        ).exists()
 
 class Ande(AnwenModel):
     user = ForeignKeyField(User)

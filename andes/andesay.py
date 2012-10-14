@@ -16,7 +16,7 @@ class AndeSay(object):
 
 
     def __init__(self):
-        city_info=urllib2.urlopen( 'http://pv.sohu.com/cityjson').read().decode('GBK')
+        city_info=urllib2.urlopen('http://pv.sohu.com/cityjson').read().decode('GBK')
         self.ip = city_info.split('=')[1].split(',')[0].split('"')[3] #取出地址信息.encode("utf-8")
         self.zipcode = city_info.split('=')[1].split(',')[1].split('"')[3] #取出地址信息
         self.addr = city_info.split('=')[1].split(',')[2].split('"')[3] #取出地址信息

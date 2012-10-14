@@ -28,8 +28,8 @@ handlers = [
     (r"/share/([^/]+)", EntryHandler),
     (r"/feed", FeedHandler),
 
-    (r"/likesuggest", LikesuggestHandler),
-    (r"/dislikesuggest", DislikesuggestHandler),
+    (r"/likesuggest/([^/]+)", LikesuggestHandler),
+    (r"/dislikesuggest/([^/]+)", DislikesuggestHandler),
 
     (r"/login", LoginHandler),
     (r"/joinus", JoinusHandler),
