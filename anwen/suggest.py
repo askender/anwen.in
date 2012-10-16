@@ -25,10 +25,13 @@ class LikesuggestHandler(JSONHandler):
             #share = Share.get(id=suggest[key])
         #realsuggest = [{Share.get(id=suggest[key]).id:Share.get(id=suggest[key]).title} for key in sorted(suggest.iterkeys(), reverse = True)]
         #print(realsuggest)
+        realsuggest = []
         for key in sorted(suggest.iterkeys(), reverse = True):
             share = Share.get(id=suggest[key])
-            realsuggest = []
-            share_post = [share]
+            #share_post = {share.id:share.title}
+            share_post = {'id':share.id,
+                        'title':share.title,
+            }
             realsuggest.append(share_post)
         self.write_json(realsuggest)
 

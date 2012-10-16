@@ -95,12 +95,22 @@ class Relationship(AnwenModel):
         return 'Relationship from %s to %s' % (self.from_user, self.to_user)
 
 
+class Hit(AnwenModel):
+    user = ForeignKeyField(User)
+    share = ForeignKeyField(Share)
+    hitnum = IntegerField(default=0)
+    hittime = DateTimeField(default=datetime.datetime.now)
+
+
+
 if __name__ == '__main__':
     # when you're ready to start querying, remember to connect
-    anwen_db.connect()
-    User.create_table()
-    Ande.create_table()
-    Share.create_table()
-    Comment.create_table()
-    Like.create_table()
-    Relationship.create_table()
+    # anwen_db.connect()
+    # User.create_table()
+    # Ande.create_table()
+    # Share.create_table()
+    # Comment.create_table()
+    # Like.create_table()
+    # Relationship.create_table()
+    # Hit.create_table()
+    pass

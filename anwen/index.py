@@ -35,6 +35,7 @@ class IndexHandler(BaseHandler):
         for member in members:
             user = User.get(id = member.id)
             member.gravatar = get_avatar(user.user_email,35)
+        print(type(shares))
         self.render("index.html",shares=shares,members=members,sharesum=sharesum,page=page)
 
 

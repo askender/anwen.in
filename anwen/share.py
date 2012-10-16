@@ -3,11 +3,12 @@
 import markdown
 import urllib2
 import datetime
+from random import randint
 import tornado.web
 from utils.avatar import *
 from base import BaseHandler
 from peewee import F
-from models import User, Share, Comment, Like
+from models import User, Share, Comment, Like, Hit
 
 class ShareHandler(BaseHandler):
     @tornado.web.authenticated
@@ -62,7 +63,45 @@ class EntryHandler(BaseHandler):
             comment.domain = user.user_domain
             comment.gravatar = get_avatar(user.user_email,50)
         hit = Share.update(hitnum = F('hitnum') +1).where(id = id).execute()
-        self.render("sharee.html", share=share,comments=comments)
+        if self.current_user:
+            is_hitted = Hit.select().where(share_id=share.id,user_id=self.current_user["user_id"]).count()>0
+            userhit = Hit.create(hitnum = 1,
+                                share_id = share.id,
+                                user_id = self.current_user["user_id"],
+                )
+        else:
+            is_hitted = self.get_cookie(share.id)
+            if not is_hitted:
+                self.set_cookie(str(share.id), "1")
+        posts = Share.select()
+        suggest = {}
+        for post in posts:
+            post.score = 100+post.id-post.user_id+post.commentnum*3+post.likenum*4+post.hitnum*0.01+randint(1,999)*0.001
+            if post.sharetype == share.sharetype:
+                post.score += 5
+            if self.current_user:
+                is_hitted = Hit.select().where(share_id=post.id,user_id=self.current_user["user_id"]).count()>0
+            else:
+                is_hitted = self.get_cookie(share.id)
+            if is_hitted:
+                post.score -= 50
+            suggest[post.score] = post.id
+            print(post.id)
+            print(post.score)
+            print(post.hitnum)
+        realsuggest = []
+        i = 1
+        for key in sorted(suggest.iterkeys(), reverse = True):
+            post = Share.get(id=suggest[key])
+            share_post = {'id':post.id,
+                        'title':post.title,
+            }
+            realsuggest.append(share_post)
+            i = i+1
+            if i>3:
+                break
+
+        self.render("sharee.html", share=share,comments=comments, realsuggest=realsuggest)
 
 
 class CommentHandler(BaseHandler):

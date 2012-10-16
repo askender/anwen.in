@@ -21,38 +21,21 @@
 				<div class="body">
 					{{ share.markdown }}
 				</div>
-				{% if current_user %}
-				<div class="span4">
+					{% if not current_user %}
+需要<a href="/login?next={{ url_escape(request.uri) }}" class="btn btn-primary">登录</a>后回复方可回复或收藏和个性化推荐, 如果还没有账号您可以<a href="/joinus?next={{ url_escape(request.uri) }}" class="btn btn-danger">注册</a>一个帐号。
+
+{% else %}
+					
 					<form id="likeit" class="pull-right">
 						{{ xsrf_form_html() }}
 						<input type="hidden" name="id" id="id" value="{{ share.id }}"/>
 						<input type="hidden" name="likenum" id="likenum" value="{{ share.likenum }}"/>
-						{% if share.is_liking %}
-							<input type='submit' id="like" class="btn btn-info disabled"  disabled="disabled" value='喜欢({{ share.likenum }})' />
+						{% if current_user or share.is_liking %}
+						<input type='submit' id="like" class="btn btn-info disabled"  disabled="disabled" value='喜欢({{ share.likenum }})' />
 						{% else %}
-							<input type='submit' id="like" class="btn btn-info" value='喜欢({{ share.likenum }})' />
+						<input type='submit' id="like" class="btn btn-info" value='喜欢({{ share.likenum }})' />
 						{% end %}
 					</form>
-
-<!-- Button to trigger modal -->
-<a href="#myModal" role="button" class="btn" data-toggle="modal">Launch demo modal</a>
- 
-<!-- Modal -->
-<div class="modal" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-header">
-    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-    <h3 id="myModalLabel">Modal header</h3>
-  </div>
-  <div class="modal-body">
-    <p>One fine body…</p>
-  </div>
-  <div class="modal-footer">
-    <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
-    <button class="btn btn-primary">Save changes</button>
-  </div>
-</div>
-
-
 					{% if current_user["user_id"]==share.user_id %}
 					<a href="/share?id={{ share.id }}">
 						<button class="btn btn-success" >
@@ -60,18 +43,36 @@
 						</button>
 					</a>
 					{% end %}
-				</div>
-				{% else %}
-需要
-				<a href="/login?next={{ url_escape(request.uri) }}" class="btn btn-primary">
-					登录
-				</a>
-				后回复方可回复或收藏和个性化推荐, 如果还没有账号您可以
-				<a href="/joinus?next={{ url_escape(request.uri) }}" class="btn btn-danger">
-					注册
-				</a>
-				一个帐号。
 {% end %}
+						<a data-toggle="modal" href="#myModal" class="btn btn-primary pull-right">
+							推荐
+						</a>
+			
+					<div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+								&times;
+							</button>
+							<h3 id="myModalLabel">
+								为您推荐~
+							</h3>
+						</div>
+						<div class="modal-body">
+							{% for post in realsuggest %}
+							<h4>
+								<a href="/share/{{ post['id'] }}">
+									{{ post['title'] }}
+								</a>
+							</h4>
+							{% end %}
+						</div>
+						<div class="modal-footer">
+							<button class="btn" data-dismiss="modal">
+								Close
+							</button>
+						</div>
+					</div>
+
 			</div>
 		</div>
 
@@ -111,7 +112,7 @@
 					<input type="hidden" name="share_id" id="share_id" value="{{ share.id }}"/>
 				</form>
 			</div>
-{% end %}
+			{% end %}
 		</div>
 	</div>
 </div>

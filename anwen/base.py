@@ -8,7 +8,8 @@ class BaseHandler(RequestHandler):
 
     def get_current_user(self):
         user_json = self.get_secure_cookie("user")
-        if not user_json: return None
+        if not user_json:
+            return None
         return json_decode(user_json)
 
 
