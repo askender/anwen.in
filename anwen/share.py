@@ -51,18 +51,18 @@ class EntryHandler(BaseHandler):
     def get(self, id):
         try:
             share = Share.get(id = id)
-            share.markdown = markdown.markdown(share.markdown)
-            if self.current_user:
-                share.is_liking = Like.select().where(share_id=share.id,user_id=self.current_user["user_id"]).count()>0
         except:
             self.redirect("/404")
+        share.markdown = markdown.markdown(share.markdown)
+        if self.current_user:
+            share.is_liking = Like.select().where(share_id=share.id,user_id=self.current_user["user_id"]).count()>0
         comments = Comment.select().where(share_id=share.id)
         for comment in comments:
             user = User.get(id = comment.user_id)
             comment.name = user.user_name
             comment.domain = user.user_domain
             comment.gravatar = get_avatar(user.user_email,50)
-        hit = Share.update(hitnum = F('hitnum') +1).where(id = id).execute()
+        hit = Share.update(hitnum = F('hitnum') +1).where(id = share.id).execute()
         if self.current_user:
             is_hitted = Hit.select().where(share_id=share.id,user_id=self.current_user["user_id"]).count()>0
             userhit = Hit.create(hitnum = 1,
@@ -88,7 +88,6 @@ class EntryHandler(BaseHandler):
             suggest[post.score] = post.id
             print(post.id)
             print(post.score)
-            print(post.hitnum)
         realsuggest = []
         i = 1
         for key in sorted(suggest.iterkeys(), reverse = True):
@@ -100,7 +99,6 @@ class EntryHandler(BaseHandler):
             i = i+1
             if i>3:
                 break
-
         self.render("sharee.html", share=share,comments=comments, realsuggest=realsuggest)
 
 
