@@ -37,7 +37,7 @@ class IndexHandler(BaseHandler):
             user = User.get(id = member.id)
             member.gravatar = get_avatar(user.user_email,35)
         print(type(shares))
-        self.render("index.html",shares=shares,members=members,sharesum=sharesum,page=page)
+        self.render("index.html",shares=shares,members=members,pagesum=pagesum,page=page)
 
 
 class SpecialHandler(BaseHandler):
@@ -113,4 +113,4 @@ class NodeHandler(BaseHandler):
         for member in members:
             user = User.get(id = member.id)
             member.gravatar = get_avatar(user.user_email,35)
-        self.render("node.html",shares=shares,members=members,sharesum=sharesum,page=page)
+        self.render("node.html",shares=shares,members=members,pagesum=pagesum,page=page)

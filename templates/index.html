@@ -9,7 +9,7 @@
 			最新分享
 		</h2>
 		<p>
-			(创造和分享，仅供学习交流，期待内容少而精)
+			(创造和分享，仅供学习交流，只分享打动你的~)
 		</p>
 		<ul class="unstyled">
 			{% for share in shares %}
@@ -41,7 +41,7 @@
 					</span>
 				</p>
 				<p class="info">
-					{{ escape(share.markdown) }}
+					{{ escape(share.markdown) }} ...
 				</p>
 			</li>
 			{% end %}
@@ -56,33 +56,35 @@
 				</a>
 			</li>
 			{% end %}
+			{% if int(page)>0 and int(pagesum)>0 %}
 			<li class="active">
 				<a href="#">
 					{{page}}
 				</a>
 			</li>
-			{% if int(sharesum)>int(page)   %}
+			{% end %}
+			{% if int(pagesum)>int(page)   %}
 			<li>
 				<a href="?page={{int(page)+1}}">
 					{{int(page)+1}}
 				</a>
 			</li>
 			{% end %}
-{% if int(sharesum)-int(page)-1>0   %}
+{% if int(pagesum)-int(page)-1>0   %}
 			<li>
 				<a href="?page={{int(page)+2}}">
 					{{int(page)+2}}
 				</a>
 			</li>
 			{% end %}
-{% if int(sharesum)-int(page)-2>0   %}
+{% if int(pagesum)-int(page)-2>0   %}
 			<li>
 				<a href="?page={{int(page)+3}}">
 					{{int(page)+3}}
 				</a>
 			</li>
 			{% end %}
-{% if int(sharesum)>int(page)   %}
+{% if int(pagesum)>int(page)   %}
 			<li>
 				<a href="?page={{int(page)+1}}">
 					下一页
