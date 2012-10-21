@@ -38,7 +38,7 @@ class IndexHandler(BaseHandler):
             member.gravatar = get_avatar(user.user_email,35)
         print(type(shares))
         suggests = Share.select().order_by(('status','desc'),('id','desc')).limit(5)
-        self.render("index.html",shares=shares,members=members,pagesum=pagesum,page=page)
+        self.render("index.html",shares=shares,members=members,pagesum=pagesum,page=page,node='home')
 
 
 class SpecialHandler(BaseHandler):
@@ -94,7 +94,7 @@ class SpecialHandler(BaseHandler):
             i = i+1
             if i>3:
                 break
-        self.render("sharee.html", share=share,comments=comments, realsuggest=realsuggest)
+        self.render("sharee.html", share=share,comments=comments, realsuggest=realsuggest,node=realpath)
 
 
 class NodeHandler(BaseHandler):
@@ -114,4 +114,4 @@ class NodeHandler(BaseHandler):
         for member in members:
             user = User.get(id = member.id)
             member.gravatar = get_avatar(user.user_email,35)
-        self.render("node.html",shares=shares,members=members,pagesum=pagesum,page=page)
+        self.render("node.html",shares=shares,members=members,pagesum=pagesum,page=page,node=node)
