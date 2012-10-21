@@ -7,7 +7,7 @@ import tornado.escape
 
 from utils.avatar import *
 from base import BaseHandler
-from models import User, Share, Like
+from db.models import User, Share, Like
 
 class LoginHandler(BaseHandler):
     def get(self):

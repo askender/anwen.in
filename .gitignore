@@ -1,2 +1,3 @@
 *.pyc
-dev_db.py
+*.sql
+*.db

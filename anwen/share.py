@@ -8,7 +8,7 @@ import tornado.web
 from utils.avatar import *
 from base import BaseHandler
 from peewee import F
-from models import User, Share, Comment, Like, Hit
+from db.models import User, Share, Comment, Like, Hit
 
 class ShareHandler(BaseHandler):
     @tornado.web.authenticated

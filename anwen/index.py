@@ -4,11 +4,11 @@ import markdown
 from utils.fliter import *
 from utils.avatar import *
 from base import BaseHandler
-from models import User, Share, Comment, Like, Hit
+from db.models import User, Share, Comment, Like, Hit
 from peewee import F
 from random import randint
 
-class RedirectHandler(BaseHandler):
+class ErrorHandler(BaseHandler):
     def get(self):
         pass
 
@@ -37,6 +37,7 @@ class IndexHandler(BaseHandler):
             user = User.get(id = member.id)
             member.gravatar = get_avatar(user.user_email,35)
         print(type(shares))
+        suggests = Share.select().order_by(('status','desc'),('id','desc')).limit(5)
         self.render("index.html",shares=shares,members=members,pagesum=pagesum,page=page)
 
 

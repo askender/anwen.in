@@ -2,8 +2,8 @@
 
 from tornado.escape import json_decode
 from tornado.web import RequestHandler, HTTPError
-from models import Ande
-#
+from db.models import Ande
+
 class BaseHandler(RequestHandler):
 
     def get_current_user(self):
