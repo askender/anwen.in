@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-# -*- coding: utf-8 -*- 
+# -*- coding: utf-8 -*-
 
 from logging import getLogger, NOTSET, info
 import tornado.httpserver
@@ -15,7 +15,7 @@ from anwen.uimodules import EntryModule, UseradminModule
 class Application(tornado.web.Application):
     def __init__(self):
         options.web_server.update(dict(
-            ui_modules={"Entry": EntryModule,"Useradmin": UseradminModule},
+            ui_modules={"Entry": EntryModule, "Useradmin": UseradminModule},
         ))
         tornado.web.Application.__init__(self, handlers, **options.web_server)
 
@@ -27,7 +27,6 @@ def launch():
     http_server.listen(options.port)
     info('Server started on %s' % options.port)
     tornado.ioloop.IOLoop.instance().start()
-
 
 
 if __name__ == '__main__':

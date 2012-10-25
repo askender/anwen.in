@@ -21,7 +21,7 @@ class Pinyin(object):
     """
 
     data_path = os.path.join(os.path.dirname(os.path.abspath(__file__)),
-            'Mandarin.dat')
+                             'Mandarin.dat')
 
     def __init__(self):
         self.dict = {}
@@ -35,7 +35,7 @@ class Pinyin(object):
             key = "%X" % ord(char)
             try:
                 result.append(self.dict[key].split(" ")[0].strip()[:-1]
-                        .lower())
+                              .lower())
             except:
                 result.append(char)
         return splitter.join(result)

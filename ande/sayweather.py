@@ -2,7 +2,8 @@
 
 import google_weather
 
-def sayweather(usersay,city):
+
+def sayweather(usersay, city):
     sayweather = ''
     if u'天气' in usersay:
         my_weather = google_weather.weather(city)

@@ -1,7 +1,8 @@
 #!/usr/bin/env python
-# -*- coding: utf-8 -*- 
+# -*- coding: utf-8 -*-
 
 import urllib
+
 
 def user_ip():
     user_ip += urllib.urlopen('http://ifconfig.me/ip').read()

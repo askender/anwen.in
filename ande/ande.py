@@ -5,7 +5,6 @@ from db.models import Ande
 from andesay import AndeSay
 
 
-
 class AndeHandler(BaseHandler):
     def get(self):
         self.render("ande.html")
@@ -20,8 +19,7 @@ class AndeHandler(BaseHandler):
         if not user_id:
             user_id = a.user_ip().replace('.', '')
         log = Ande.create(
-                        user_id = '1',
-                        usersay = usersay,
-                        andesay = andesay,
-                    )
+            user_id='1',
+            usersay=usersay,
+            andesay=andesay, )
         self.write(andesay)

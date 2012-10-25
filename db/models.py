@@ -4,9 +4,8 @@ import datetime
 from peewee import *
 import tornado.web
 
-anwen_db = MySQLDatabase('anwen-test', user='root',passwd='')
+anwen_db = MySQLDatabase('anwen-test', user='root', passwd='')
 #anwen_db = SqliteDatabase('anwentest.db')
-
 
 
 class AnwenModel(Model):
@@ -51,6 +50,7 @@ class User(AnwenModel):
             user_id=self,
             share_id=share_id
         ).exists()
+
 
 class Ande(AnwenModel):
     user = ForeignKeyField(User)
@@ -99,7 +99,6 @@ class Hit(AnwenModel):
     share = ForeignKeyField(Share)
     hitnum = IntegerField(default=0)
     hittime = DateTimeField(default=datetime.datetime.now)
-
 
 
 if __name__ == '__main__':

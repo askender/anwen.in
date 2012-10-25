@@ -11,11 +11,12 @@ import uuid
 
 from base import BaseHandler
 
+
 class ChatsHandler(BaseHandler):
     def get(self):
-        if not self.current_user:  
-            self.redirect("/login")  
-            return  
+        if not self.current_user:
+            self.redirect("/login")
+            return
         name = tornado.escape.xhtml_escape(self.current_user["user_name"])
         self.render("chats.html", name=name, messages=ChatSocketHandler.cache)
 
@@ -55,8 +56,7 @@ class ChatSocketHandler(tornado.websocket.WebSocketHandler):
         parsed = tornado.escape.json_decode(message)
         chat = {
             "id": str(uuid.uuid4()),
-            "body": parsed["body"],
-            }
+            "body": parsed["body"], }
         chat["html"] = self.render_string("chatsmessage.html", message=chat)
 
         ChatSocketHandler.update_cache(chat)

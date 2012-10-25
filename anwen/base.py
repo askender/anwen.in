@@ -4,6 +4,7 @@ from tornado.escape import json_decode
 from tornado.web import RequestHandler, HTTPError
 from db.models import Ande
 
+
 class BaseHandler(RequestHandler):
 
     def get_current_user(self):
@@ -76,6 +77,5 @@ class JSONHandler(BaseHandler):
         def handler(obj):
             print repr(obj)
             return dict(obj)
-        s = dumps(obj)#, default=handler)
+        s = dumps(obj)  # default=handler
         return self.write(s)
-

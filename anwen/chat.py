@@ -6,11 +6,12 @@ import tornado.escape
 
 from base import BaseHandler
 
+
 class ChatHandler(BaseHandler):
     def get(self):
-        if not self.current_user:  
-            self.redirect("/login")  
-            return  
+        if not self.current_user:
+            self.redirect("/login")
+            return
         name = tornado.escape.xhtml_escape(self.current_user["user_name"])
         self.render("chat.html", name=name, messages=MessageMixin.cache)
 
@@ -26,7 +27,8 @@ class MessageMixin(object):
             index = 0
             for i in xrange(len(cls.cache)):
                 index = len(cls.cache) - i - 1
-                if cls.cache[index]["id"] == cursor: break
+                if cls.cache[index]["id"] == cursor:
+                    break
             recent = cls.cache[index + 1:]
             if recent:
                 callback(recent)
@@ -61,7 +63,7 @@ class MessageNewHandler(BaseHandler, MessageMixin):
             "from": name,
             "body": self.get_argument("body"),
         }
-        message["html"] = self.render_string("chatmessage.html", message=message)
+        message["html"] = self.render_string("chatmsg.html", message=message)
         if self.get_argument("next", None):
             self.redirect(self.get_argument("next"))
         else:
