@@ -1,3 +1,8 @@
 *.pyc
 *.sql
 *.db
+server_setting.py
+db_config_server.py
+anwen-test
+/log/files/*.log
+/log/files/*.log.*

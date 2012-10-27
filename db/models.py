@@ -3,9 +3,18 @@
 import datetime
 from peewee import *
 import tornado.web
+import db_config
 
-anwen_db = MySQLDatabase('anwen-test', user='root', passwd='')
-#anwen_db = SqliteDatabase('anwentest.db')
+
+if db_config.db['type'] == 'sqlite':
+    anwen_db = SqliteDatabase(db_config.db['name'])
+elif db_config.db['type'] == 'mysql':
+    anwen_db = MySQLDatabase(
+        db_config.db['name'],
+        user=db_config.db['user'],
+        passwd=db_config.db['passwd'])
+else:
+    info('database error')
 
 
 class AnwenModel(Model):
@@ -101,14 +110,14 @@ class Hit(AnwenModel):
     hittime = DateTimeField(default=datetime.datetime.now)
 
 
-if __name__ == '__main__':
+def main():
     # when you're ready to start querying, remember to connect
-    # anwen_db.connect()
-    # User.create_table()
-    # Ande.create_table()
-    # Share.create_table()
-    # Comment.create_table()
-    # Like.create_table()
-    # Relationship.create_table()
-    # Hit.create_table()
-    pass
+    anwen_db.connect()
+    User.create_table()
+    Ande.create_table()
+    Share.create_table()
+    Comment.create_table()
+    Like.create_table()
+    Relationship.create_table()
+    Hit.create_table()
+    print('database created')

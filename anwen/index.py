@@ -11,7 +11,7 @@ from random import randint
 
 class ErrorHandler(BaseHandler):
     def get(self, some):
-        self.redirect("/404")
+        self.render("404.html", node='notyet')
 
 
 class NotyetHandler(BaseHandler):
