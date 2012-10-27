@@ -10,13 +10,13 @@ from random import randint
 
 
 class ErrorHandler(BaseHandler):
-    def get(self):
-        pass
+    def get(self, some):
+        self.redirect("/404")
 
 
 class NotyetHandler(BaseHandler):
     def get(self):
-        self.render("404.html")
+        self.render("404.html", node='notyet')
 
 
 class IndexHandler(BaseHandler):
