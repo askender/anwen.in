@@ -33,10 +33,10 @@ class IndexHandler(BaseHandler):
             share.markdown = markdown.markdown(share.markdown)
             share.markdown = filter_tags(share.markdown)[:100]
             share.gravatar = get_avatar(user.user_email, 16)
-        members = User.select().order_by('id').paginate(1, 20)
+        members = User.select().order_by(('id', 'desc')).paginate(1, 20)
         for member in members:
             user = User.get(id=member.id)
-            member.gravatar = get_avatar(user.user_email, 35)
+            member.gravatar = get_avatar(user.user_email, 25)
         print(type(shares))
         suggests = Share.select().order_by(
             ('status', 'desc'), ('id', 'desc')).limit(5)

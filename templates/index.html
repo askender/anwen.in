@@ -6,7 +6,7 @@
 <div class="span8">
 	<div class="mod user-feeds">
 		<h2>
-			最新分享
+			{{_('Newest')}}{{_('Share')}}
 		</h2>
 		<p>
 			(创造和分享，仅供学习交流，只分享打动你的~)
@@ -100,12 +100,12 @@
 
 	<div class="mod users-head">
 		<h2>
-			会员
+			{{_('Newest')}}{{_('Member')}}
 		</h2>
 		<div class="mod-body">
 			{% for member in members %}
 			<a href="/user/{{member.user_domain}}" title="{{member.user_name}}">
-				<img src="{{member.gravatar}}" width="35" height="35" alt="{{member.user_name}}"/>
+				<img src="{{member.gravatar}}" width="25" height="25" alt="{{member.user_name}}"/>
 			</a>
 			{% end %}
 		</div>

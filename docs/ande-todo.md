@@ -1,17 +1,12 @@
-安德行动计划 ande todo
+安德成长计划 ande todo
 ========
 
+* 安德 以MIT协议开源发布 V0.02  20121027
+* 快速迭代中
+* 恢复原有能力
+* 列出使用的API
+* 恢复音乐，天气API
 
-
-安德 以MIT协议开源发布
-版本0.02  20120923
-
-目前是最初级版，稍后会尽快不断更新
-安德成长计划-培养架构
-
-todo:
-恢复原有能力
-列出使用的API:
 http://int.dpool.sina.com.cn/iplookup/iplookup.php?format=json
 (不准)
 http://int.dpool.sina.com.cn/iplookup/iplookup.php?format=json&ip=115.156.238.114
