@@ -16,11 +16,24 @@
 * [升级日志](http://i.askender.com/changelog )
 * 也欢迎联系我们: askender43@gmail.com
 
-正在开发:
+## 正在开发
 * 个性化智能推荐系统，基于(同样对其感兴趣的人也喜欢)(文章的tag-DNA相近性)
 * 维基协作更新文章（类似git）
 * 为作者提供稿费,与版权方合作
 * 寻找无版权限制的优质内容
 * 各种有趣的小项目,包括安德,html5游戏,线下活动等
 * 加入人工智能[安德·alpha](http://i.askender.com/ande) 原有能力近期恢复
+
+## Thanks
+
+* [Twitter Bootstrap](https://twitter.github.com/bootstrap)
+
+
+## License
+
+Copyleft ^_^ 2011-2012 Anwen
+
+Released under the MIT license:
+
+* [www.opensource.org/licenses/MIT](http://www.opensource.org/licenses/MIT)
 

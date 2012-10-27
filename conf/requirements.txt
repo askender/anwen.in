@@ -2,7 +2,7 @@
 # You can: pip install -r requirements.txt
 
 tornado
-#Flask
+# Flask
 markdown
 
 #Jinja2
@@ -11,7 +11,7 @@ markdown
 
 # database
 MySQL-python
-peewee
+peewee<2.0.0
 #SQLAlchemy
 
 # cache support
@@ -21,8 +21,8 @@ peewee
 #-e hg+https://bitbucket.org/simplecodes/wtforms#egg=WTForms
 
 # mail support
-#Flask-Mail
-#tornadomail
+# Flask-Mail
+# tornadomail
 
 # testing
-#nose
+# nose
