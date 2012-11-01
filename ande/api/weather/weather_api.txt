@@ -1,0 +1,107 @@
+目前使用：
+http://webservice.36wu.com/IpService.asmx/getMyIP
+http://61.4.185.48:81/g/ (根据IP查询城市ID)
+http://m.weather.com.cn/data/101110101.html（六天预报）
+http://www.weather.com.cn/data/sk/101110101.html（实时天气信息 101200101）
+http://www.weather.com.cn/static/html/legend.shtml（天气图例）
+XML接口 http://flash.weather.com.cn/wmaps/xml/china.xml 这个是全国天气的根节点，列出所有的省，其中的pyName字段是各个省XML的文件名
+北京的XML地址为 http://flash.weather.com.cn/wmaps/xml/beijing.xml
+http://m.weather.com.cn/img/c0.gif http://m.weather.com.cn/img/b0.gif http://www.weather.com.cn/m/i/weatherpic/29x20/d0.gif http://www.weather.com.cn/m2/i/icon_weather/29x20/n00.gif 这个图就是天气现象0（晴）的图片，其他天气现象的图片依此类推。c打头的图片是20*20像素的，b打头的是50*46像素的，d打头的是反白的图标，29*20像素，n打头的是夜间反白图标，29*20像素
+http://flash.weather.com.cn/sk2/101220607.xml
+http://flash.weather.com.cn/sk2/shikuang.swf?id=101220607
+http://www.weather.com.cn/static/custom/search3.htm
+备用：
+http://www.weather.com.cn/html/weather/101010200.shtml
+腾讯
+http://sou.qq.com/online/get_weather.php?callback=Weather&city=武汉
+http://tianqi.2345.com/t/
+http://tianqi.2345.com/t/detect2009v2.php
+http://www.hujuntao.com/api/weather/api.php?city=武汉
+http://toy.weather.com.cn/SearchBox/searchBox?callback=jsonp1343396048201&_=1343396067262&language=zh&keyword=武汉
+google失效：
+http://www.google.com/ig/api?weather=Beijing
+不用：
+http://www.youdao.com/smartresult-xml/search.s?type=weather&jsFlag=true&q=南京
+http://cdn.weather.hao.360.cn/api_weather_info.php?app=hao360&_jsonp=smartloaddata101190101&code=101190101
+http://weather.msn.com/data.aspx?wealocations=wc:CHXX0008&weadegreetype=C
+？：
+http://weather.all2rss.com/weatherrss.asp?City=%C4%CF%BE%A9
+http://xml.weather.yahoo.com/forecastrss?p=CHXX0008&u=f
+http://weather.yahooapis.com/forecastrss?w=2459115&u=f
+国外的：
+http://www.webservicex.net/globalweather.asmx?op=GetWeather
+其免费的服务有点不稳定：
+http://webservice.webxml.com.cn/WebServices/WeatherWS.asmx
+ThinkPage(收费)：
+http://www.thinkpage.cn/weather/api.svc/getWeather?city=101010100&language=zh-chs&provider=cma&unit=c&key=
+
+
+
+快递查询WEB服务
+
+http://webservice.36wu.com/ExpressService.asmx
+
+支持上百家快递/物流查询，准确高效，所有数据均来自快递服务商。此数据返回类型进行了封装，方便开发人员和应用者进行调用，后期会提供返回json类型，敬请关注。
+
+天气预报WEB服务
+
+http://webservice.36wu.com/weatherService.asmx
+
+天气图标下载 http://www.36wu.com/WeatherPic.aspx
+
+涵盖全国2560多个区县市天气预报数据查询，支持未来六天天气查询和当天查询，数据每二小时左右自动更新一次。
+
+手机归属地WEB服务
+
+http://webservice.36wu.com/MobilePhoneService.asmx
+
+支持当前所有运营商手机号码查询，方便开发人员应用我们提供了多种调用方式支持多种返回类型，XML、JSON等格式。
+
+身份证查询WEB服务
+
+http://webservice.36wu.com/IdCardService.asmx
+
+根据18位身份证号码查询所属的地区、出生日期、性别等资料。可根据身份证号码的校验码核实该身份证号码是否正确。
+
+IP查询WEB服务
+
+http://webservice.36wu.com/IpService.asmx
+
+目前精确IP查询服务，包括全球43W段IP，数据每二天自动更新一次，确保了数据精确。
+
+翻译WEB服务
+
+http://webservice.36wu.com/TranslationService.asmx
+
+提供了中英、中日、日中等翻译，后期会提供更多的翻译接口敬请期待。
+
+ 股票查询WEB服务
+
+http://webservice.36wu.com/StockService.asmx
+
+支持上海、深圳、香港等多家股票和基金查询，同时支持多股票查询，多股查询请用“|”进行分割。
+
+火车时刻WEB服务
+
+http://webservice.36wu.com/TrainService.asmx
+
+涵盖了国内现有的所有列车，返回数据支持JSON和多种格式，为开发人员提供了方便。
+邮编查询Web服务 
+
+http://webservice.36wu.com/ZipcodeService.asmx
+
+ 二维码Web服务
+
+http://webservice.36wu.com/DimensionalCodeService.asmx
+公交查询Web服务
+
+http://webservice.36wu.com/mapService.asmx 
+
+ISBN查询Web服务
+
+目前最全的ISBN查询服务接口，涵盖了全球ISBN信息查询
+
+http://webservice.36wu.com/ISBNService.asmx
+ ICP备案查询Web服务 
+
+http://webservice.36wu.com/ICPServic.asmx

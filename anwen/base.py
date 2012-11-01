@@ -2,7 +2,6 @@
 
 from tornado.escape import json_decode
 from tornado.web import RequestHandler, HTTPError
-from db.models import Ande
 
 
 class BaseHandler(RequestHandler):

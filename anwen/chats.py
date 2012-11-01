@@ -14,10 +14,13 @@ from base import BaseHandler
 
 class ChatsHandler(BaseHandler):
     def get(self):
-        if not self.current_user:
-            self.redirect("/login")
-            return
-        name = tornado.escape.xhtml_escape(self.current_user["user_name"])
+        # if not self.current_user:
+        #     self.redirect("/login")
+        #     return
+        try:
+            name = tornado.escape.xhtml_escape(self.current_user["user_name"])
+        except:
+            name = 'guest'
         self.render("chats.html", name=name, messages=ChatSocketHandler.cache)
 
 

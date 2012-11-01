@@ -16,7 +16,7 @@ class Application(tornado.web.Application):
         options.web_server.update(dict(
             ui_modules={"Entry": EntryModule, "Useradmin": UseradminModule},
         ))
-        application = tornado.web.Application.__init__(
+        tornado.web.Application.__init__(
             self, handlers, **options.web_server)
 
 options.web_server.update(
@@ -43,14 +43,30 @@ parser = argparse.ArgumentParser(description='Anwen Server')
 
 parser.add_argument(
     '-c', '--create-db',
-    dest='extra_operations',
-    action='append_const',
+    dest='create_db',
+    action='store_const',
     const=create_db,
     help='create database'
 )
 
+parser.add_argument(
+    '-t', '--test',
+    dest='run_tests',
+    action='store_const',
+    const=True,
+    default=False,
+    help='run tests'
+)
 
 if __name__ == '__main__':
     args = parser.parse_args()
-    [op() for op in args.extra_operations or []]
-    launch()
+    if args.run_tests:
+        import tests
+        import sys
+        locals()['all'] = tests.all
+        sys.argv = sys.argv[:1]
+        tests.main()
+    elif args.create_db:
+        create_db()
+    else:
+        launch()

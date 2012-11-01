@@ -19,7 +19,7 @@ $(document).ready(function() {
     var WebSocket = window.WebSocket || window.MozWebSocket;
     if (WebSocket) {
     } else {
-        alert ('222');
+        alert ('your browser is not support WebSocket');
     }
 
     $("#messageform").live("submit", function() {

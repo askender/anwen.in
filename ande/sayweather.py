@@ -1,6 +1,6 @@
 # -*- coding:utf-8 -*-
 
-import google_weather
+# import google_weather
 
 
 def sayweather(usersay, city):
