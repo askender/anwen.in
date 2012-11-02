@@ -1,28 +1,32 @@
 # This requirements is for development
 # You can: pip install -r requirements.txt
 
-tornado
+tornado>=2.3
 # Flask
+
 markdown
 
-#Jinja2
-#misaka
-#pygments
+# Jinja2
+# misaka
+# pygments
 
-# database
-MySQL-python
+### database
+
 peewee<2.0.0
-#SQLAlchemy
+# MySQL-python
+# SQLAlchemy
+# pymongo==2.2.1
+# mongokit==0.8
 
-# cache support
-#python-memcached
+### cache support
+# python-memcached
 
-# form support
-#-e hg+https://bitbucket.org/simplecodes/wtforms#egg=WTForms
+### form support
+# -e hg+https://bitbucket.org/simplecodes/wtforms#egg=WTForms
 
-# mail support
+### mail support
 # Flask-Mail
 # tornadomail
 
-# testing
+### testing
 # nose
