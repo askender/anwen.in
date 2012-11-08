@@ -11,7 +11,7 @@
 * 正在不断开发中，欢迎大家fork & pull request
 * 更多信息可参考docs
 * [关于安问](http://i.askender.com/about)
-* [安德日记](http://i.askender.com/andelog)
+* [安德成长日志](http://i.askender.com/ande-growup-log)
 * [安问google论坛](https://groups.google.com/d/forum/our-anwen )
 * [升级日志](http://i.askender.com/changelog )
 * 也欢迎联系我们: askender43@gmail.com
