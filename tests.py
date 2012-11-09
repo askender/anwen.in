@@ -4,7 +4,6 @@ import uuid
 import random
 import unittest
 import tornado.testing
-from json import loads as jload
 from json import dumps as jdump
 
 
@@ -63,10 +62,6 @@ class HttpTest(tornado.testing.AsyncHTTPTestCase):
             print(res.headers)
             # json = jload(res.body)
             # assert_similar(json, self.create_args)
-            try:
-                self.oid = json['_id']
-            except:
-                pass
 
     def tearDown(self):
         getattr(self, 'tear_down', lambda: None)()

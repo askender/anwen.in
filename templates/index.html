@@ -112,3 +112,19 @@
 	</div>
 </div>
 {% end %}
+
+{% block bottom %}
+<script type="text/javascript">
+  //<![CDATA[
+
+  $(document).ready(function() {
+              JudgeActive();
+          });
+  function JudgeActive() {
+    var node = '{{ node if node else "" }}';
+    $("ul.nav li[id="+node+"]").addClass('active');
+
+  }
+
+  //]]></script>
+{% end %}

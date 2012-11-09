@@ -2,7 +2,6 @@
 
 import datetime
 from peewee import *
-import tornado.web
 import db_config
 
 

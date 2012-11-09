@@ -18,7 +18,7 @@ class AndeHandler(BaseHandler):
             user_id = self.current_user["user_id"]
         if not user_id:
             user_id = a.user_ip().replace('.', '')
-        log = Ande.create(
+        Ande.create(
             user_id='1',
             usersay=usersay,
             andesay=andesay, )

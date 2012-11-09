@@ -11,12 +11,12 @@ from random import randint
 
 class ErrorHandler(BaseHandler):
     def get(self, some):
-        self.render("404.html", node='notyet')
+        self.render("404.html")
 
 
 class NotyetHandler(BaseHandler):
     def get(self):
-        self.render("404.html", node='notyet')
+        self.render("404.html")
 
 
 class IndexHandler(BaseHandler):
@@ -38,7 +38,7 @@ class IndexHandler(BaseHandler):
             user = User.get(id=member.id)
             member.gravatar = get_avatar(user.user_email, 25)
         print(type(shares))
-        suggests = Share.select().order_by(
+        Share.select().order_by(
             ('status', 'desc'), ('id', 'desc')).limit(5)
         self.render(
             "index.html", shares=shares, members=members,
@@ -63,15 +63,15 @@ class SpecialHandler(BaseHandler):
             comment.name = user.user_name
             comment.domain = user.user_domain
             comment.gravatar = get_avatar(user.user_email, 50)
-        hit = Share.update(hitnum=F('hitnum') + 1).where(
+        Share.update(hitnum=F('hitnum') + 1).where(
             id=share.id).execute()
         if self.current_user:
             is_hitted = Hit.select().where(
                 share_id=share.id,
                 user_id=self.current_user["user_id"]).count() > 0
-            userhit = Hit.create(hitnum=1,
-                                 share_id=share.id,
-                                 user_id=self.current_user["user_id"], )
+            Hit.create(
+                hitnum=1, share_id=share.id,
+                user_id=self.current_user["user_id"], )
         else:
             is_hitted = self.get_cookie(share.id)
             if not is_hitted:
@@ -107,7 +107,7 @@ class SpecialHandler(BaseHandler):
                 break
         self.render(
             "sharee.html", share=share, comments=comments,
-            realsuggest=realsuggest, node=realpath)
+            realsuggest=realsuggest)
 
 
 class NodeHandler(BaseHandler):

@@ -142,19 +142,8 @@
   <!-- Placed at the end of the document so the pages load faster -->
 
   <script src="{{ static_url("js/jquery.js") }}"></script>
-  {% block bottom %}{% end %}
   <script src="{{ static_url("js/bootstrap.min.js") }}"></script>
-<script type="text/javascript">
-  //<![CDATA[
-$(document).ready(function() {
-            JudgeActive();
-        });
-function JudgeActive() {
-  var node = '{{ node if node else "" }}';
-  $("ul.nav li[id="+node+"]").addClass('active');
+  {% block bottom %}{% end %}
 
-}
-
-  //]]></script>
 </body>
 </html>

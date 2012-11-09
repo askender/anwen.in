@@ -3,12 +3,11 @@
 import string
 import urllib
 import urllib2
-import json
 
 from tool.fenci import fenci
 from tool.xpinyin import Pinyin
 from sayhello import sayhello
-from sayweather import sayweather
+# from sayweather import sayweather
 from saysong import saysong
 
 
@@ -60,11 +59,11 @@ class AndeSay(object):
 
         p = Pinyin()
         userfenci = fenci(usersay)
-        userfencij = json.loads(userfenci)
-        is_cn = self.is_cn(usersay)
+        # userfencij = json.loads(userfenci)
+        # is_cn = self.is_cn(usersay)
         #city = p.get_pinyin(self.city)
 
-        #andesay += sayweather(usersay,city)
+        # andesay += sayweather(usersay,city)
         andesay += sayhello(usersay)
         andesay += saysong(usersay)
 

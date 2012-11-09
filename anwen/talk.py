@@ -19,7 +19,6 @@ import tornado.escape
 import tornado.ioloop
 import tornado.web
 import tornado.websocket
-import os.path
 import uuid
 from base import BaseHandler
 

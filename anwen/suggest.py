@@ -1,11 +1,9 @@
 # -*- coding:utf-8 -*-
 
-import markdown
 from utils.fliter import *
 from utils.avatar import *
 from random import randint
 from base import JSONHandler
-from db.models import User, Share, Comment
 
 
 class LikesuggestHandler(JSONHandler):

@@ -16,7 +16,7 @@ class LoginHandler(BaseHandler):
             self.redirect("/")
             return
         self.set_cookie("checkflag", "true")
-        self.render("login.html", node='')
+        self.render("login.html")
 
     def post(self):
         if not self.request.headers.get("Cookie"):
@@ -133,7 +133,7 @@ class SettingHandler(BaseHandler):
         name = self.get_argument("name", None)
         city = self.get_argument("city", None)
         say = self.get_argument("say", None)
-        user = User.update(
+        User.update(
             user_name=name,
             user_city=city,
             user_say=say).where(id=self.current_user["user_id"]).execute()

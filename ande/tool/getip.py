@@ -5,7 +5,7 @@ import urllib
 
 
 def user_ip():
-    user_ip += urllib.urlopen('http://ifconfig.me/ip').read()
+    user_ip = urllib.urlopen('http://ifconfig.me/ip').read()
     return user_ip
 
 

@@ -3,7 +3,6 @@
 import tornado.web
 
 from utils.avatar import *
-from base import BaseHandler
 
 
 class EntryModule(tornado.web.UIModule):

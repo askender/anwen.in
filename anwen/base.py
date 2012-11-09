@@ -2,6 +2,8 @@
 
 from tornado.escape import json_decode
 from tornado.web import RequestHandler, HTTPError
+import json
+from log import logger
 
 
 class BaseHandler(RequestHandler):
@@ -16,7 +18,6 @@ class BaseHandler(RequestHandler):
 def require_login(method):
     """Decorate methods with this to require user logged in."""
     import functools
-    import tornado
 
     @functools.wraps(method)
     def wrapper(self, *args, **kwargs):
