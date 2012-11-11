@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from anwen.index import ErrorHandler, NotyetHandler, IndexHandler, SpecialHandler, NodeHandler
+from anwen.index import IndexHandler, SpecialHandler, NodeHandler, NotyetHandler
 from anwen.user import LoginHandler, JoinusHandler, LogoutHandler, UserhomeHandler, UserlikeHandler, SettingHandler, ChangePassHandler, MemberHandler
 from anwen.share import ShareHandler, EntryHandler, CommentHandler, LikeHandler, FeedHandler
 from anwen.suggest import LikesuggestHandler, DislikesuggestHandler
@@ -14,6 +14,7 @@ handlers = [
     (r"/changelog", SpecialHandler),
     (r"/help", SpecialHandler),
     (r"/markdown", SpecialHandler),
+    (r"/ande-growup-log", SpecialHandler),
     (r"/nodes", SpecialHandler),
     (r"/node/([^/]+)", NodeHandler),
 
@@ -47,7 +48,7 @@ handlers = [
 
 
 
-    # Custom 404 ErrorHandler,always put this at last
-    (r'/(.*)', ErrorHandler),
+    # Custom 404 NotyetHandler,always put this at last
+    (r'/(.*)', NotyetHandler),
 
 ]

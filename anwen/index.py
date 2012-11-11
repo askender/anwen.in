@@ -1,22 +1,13 @@
 # -*- coding:utf-8 -*-
 
-import markdown
-from utils.fliter import *
-from utils.avatar import *
+from markdown import markdown
+from utils.fliter import filter_tags
+from utils.avatar import get_avatar
 from base import BaseHandler
 from db.models import User, Share, Comment, Like, Hit
 from peewee import F
 from random import randint
-
-
-class ErrorHandler(BaseHandler):
-    def get(self, some):
-        self.render("404.html")
-
-
-class NotyetHandler(BaseHandler):
-    def get(self):
-        self.render("404.html")
+import options
 
 
 class IndexHandler(BaseHandler):
@@ -30,19 +21,43 @@ class IndexHandler(BaseHandler):
             user = User.get(id=share.user_id)
             share.name = user.user_name
             share.domain = user.user_domain
-            share.markdown = markdown.markdown(share.markdown)
-            share.markdown = filter_tags(share.markdown)[:100]
+            share.markdown = filter_tags(markdown(share.markdown))[:100]
             share.gravatar = get_avatar(user.user_email, 16)
         members = User.select().order_by(('id', 'desc')).paginate(1, 20)
         for member in members:
             user = User.get(id=member.id)
             member.gravatar = get_avatar(user.user_email, 25)
-        print(type(shares))
         Share.select().order_by(
             ('status', 'desc'), ('id', 'desc')).limit(5)
+        node = 'home'
+        node_about = options.node_about[node]
         self.render(
-            "index.html", shares=shares, members=members,
-            pagesum=pagesum, page=page, node='home')
+            "node.html", shares=shares, members=members,
+            pagesum=pagesum, page=page, node=node, node_about=node_about)
+
+
+class NodeHandler(BaseHandler):
+    def get(self, node):
+        page = self.get_argument("page", "1")
+        realpage = int(page)
+        shares = Share.select().where(
+            sharetype=node).order_by('id').paginate(realpage, 10)
+        sharesum = shares.count()
+        pagesum = (sharesum + 9) / 10
+        for share in shares:
+            user = User.get(id=share.user_id)
+            share.name = user.user_name
+            share.domain = user.user_domain
+            share.markdown = filter_tags(markdown(share.markdown))[:100]
+            share.gravatar = get_avatar(user.user_email, 16)
+        members = User.select().order_by('id').paginate(1, 20)
+        for member in members:
+            user = User.get(id=member.id)
+            member.gravatar = get_avatar(user.user_email, 35)
+        node_about = options.node_about[node]
+        self.render(
+            "node.html", shares=shares, members=members,
+            pagesum=pagesum, page=page, node=node, node_about=node_about)
 
 
 class SpecialHandler(BaseHandler):
@@ -52,7 +67,7 @@ class SpecialHandler(BaseHandler):
             share = Share.get(slug=realpath)
         except:
             self.redirect("/404")
-        share.markdown = markdown.markdown(share.markdown)
+        share.markdown = markdown(share.markdown)
         if self.current_user:
             share.is_liking = Like.select().where(
                 share_id=share.id,
@@ -110,24 +125,6 @@ class SpecialHandler(BaseHandler):
             realsuggest=realsuggest)
 
 
-class NodeHandler(BaseHandler):
-    def get(self, node):
-        page = self.get_argument("page", "1")
-        realpage = int(page)
-        shares = Share.select().where(
-            sharetype=node).order_by('id').paginate(realpage, 10)
-        sharesum = shares.count()
-        pagesum = (sharesum + 9) / 10
-        for share in shares:
-            user = User.get(id=share.user_id)
-            share.name = user.user_name
-            share.domain = user.user_domain
-            share.markdown = filter_tags(share.markdown)[:100]
-            share.gravatar = get_avatar(user.user_email, 16)
-        members = User.select().order_by('id').paginate(1, 20)
-        for member in members:
-            user = User.get(id=member.id)
-            member.gravatar = get_avatar(user.user_email, 35)
-        self.render(
-            "node.html", shares=shares, members=members,
-            pagesum=pagesum, page=page, node=node)
+class NotyetHandler(BaseHandler):
+    def get(self):
+        self.render("404.html")

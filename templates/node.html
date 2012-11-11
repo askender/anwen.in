@@ -1,21 +1,16 @@
 {% extends "base.html" %}
-{% block titlemore %}
-- {{ node }}
+{% block title %}
+{{ _(node_about['name']) }}-{{ _(node_about['about']) }}-
 {% end %}
 {% block body %}
 <div class="span8">
 	<div class="mod user-feeds">
 		<h2>
-			最新分享
+			{{ _(node_about['name']) }}
 		</h2>
 		<p>
-			(创造和分享，仅供学习交流，只分享打动你的~)
+			{{ _(node_about['about']) }}
 		</p>
-		{% if int(page) < 1 %}
-		<p>
-			本分类暂时还没有文章~
-		</p>
-		{% end %}
 		<ul class="unstyled">
 			{% for share in shares %}
 			<li>
@@ -33,92 +28,111 @@
 					</span>
 				</h3>
 				<p class="user clearfix">
-					<a href="/user/{{ share.domain }}" title="{{ share.name }}" class="pull-right">
-						<img src="{{ share.gravatar }}" width="25" height="25" alt="{{ share.name }}"/>
+					<!-- 					<a href="/user/{{ share.domain }}" title="{{ share.name }}" class="pull-right">
+					<img src="{{ share.gravatar }}" width="25" height="25" alt="{{ share.name }}"/>
+				</a>
+				-->
+				<span class="who">
+					<a href="/user/{{ share.domain }}" title="{{ share.name }}">
+						{{ share.name }}
 					</a>
-					<span class="who">
-						<a href="/user/{{ share.domain }}" title="{{ share.name }}">
-							{{ share.name }}
-						</a>
-					</span>
-					<span data-time='' class="date">
-						{{ share.published }}
-					</span>
-				</p>
-				<p class="info">
-					{{ escape(share.markdown) }}
-				</p>
-			</li>
-			{% end %}
-		</ul>
-	</div>
-
-	<div class="pagination">
-		<ul>
-			{% if int(page)>1 %}
-			<li>
-				<a href="?page={{int(page)-1}}">
-					前一页
-				</a>
-			</li>
-			{% end %}
+				</span>
+				<span data-time='' class="date">
+					{{ share.published }}
+				</span>
+			</p>
+			<p class="info">
+				{{ escape(share.markdown) }} ...
+			</p>
+		</li>
+		{% end %}
+	</ul>
+</div>
+<div class="pagination">
+	<ul>
+		{% if int(page)>1 %}
+		<li>
+			<a href="?page={{int(page)-1}}">
+				前一页
+			</a>
+		</li>
+		{% end %}
 			{% if int(page)>0 and int(pagesum)>0 %}
-			<li class="active">
-				<a href="#">
-					{{page}}
-				</a>
-			</li>
-			{% end %}
+		<li class="active">
+			<a href="#">
+				{{page}}
+			</a>
+		</li>
+		{% end %}
 			{% if int(pagesum)>int(page)   %}
-			<li>
-				<a href="?page={{int(page)+1}}">
-					{{int(page)+1}}
-				</a>
-			</li>
-			{% end %}
+		<li>
+			<a href="?page={{int(page)+1}}">
+				{{int(page)+1}}
+			</a>
+		</li>
+		{% end %}
 {% if int(pagesum)-int(page)-1>0   %}
-			<li>
-				<a href="?page={{int(page)+2}}">
-					{{int(page)+2}}
-				</a>
-			</li>
-			{% end %}
+		<li>
+			<a href="?page={{int(page)+2}}">
+				{{int(page)+2}}
+			</a>
+		</li>
+		{% end %}
 {% if int(pagesum)-int(page)-2>0   %}
-			<li>
-				<a href="?page={{int(page)+3}}">
-					{{int(page)+3}}
-				</a>
-			</li>
-			{% end %}
+		<li>
+			<a href="?page={{int(page)+3}}">
+				{{int(page)+3}}
+			</a>
+		</li>
+		{% end %}
 {% if int(pagesum)>int(page)   %}
-			<li>
-				<a href="?page={{int(page)+1}}">
-					下一页
-				</a>
-			</li>
-			{% end %}
-		</ul>
-	</div>
+		<li>
+			<a href="?page={{int(page)+1}}">
+				下一页
+			</a>
+		</li>
+		{% end %}
+	</ul>
+</div>
 
 </div>
 <div class="span4">
 
-
-	<div class="mod users-head">
-		<h2>
-			{{_('Newest')}}{{_('Member')}}
-		</h2>
-		<div class="mod-body">
-			{% for member in members %}
-			<a href="/user/{{member.user_domain}}" title="{{member.user_name}}">
-				<img src="{{member.gravatar}}" width="25" height="25" alt="{{member.user_name}}"/>
-			</a>
-			{% end %}
-		</div>
+<div class="mod users-head">
+	<h2>
+		{{_('Newest')}}{{_('Member')}}
+	</h2>
+	<div class="mod-body">
+		{% for member in members %}
+		<a href="/user/{{member.user_domain}}" title="{{member.user_name}}">
+			<img src="{{member.gravatar}}" width="25" height="25" alt="{{member.user_name}}"/>
+		</a>
+		{% end %}
 	</div>
 </div>
-{% end %}
 
+<div class="mod about">
+	<h2>
+		安问是什么
+	</h2>
+	<p>
+		一个高质量的内容社区，只分享最打动你的东西，保证内容的长久有趣，号召理想主义黑客共同开发的开源项目（包含一个人工智能子项目和推进互联网信息自由的子项目）
+	</p>
+	<p>
+		邮箱：anwen.in@gmail.com
+	</p>
+	<p>
+		<a href="https://github.com/askender/anwen.in">
+			开源@github
+		</a>
+		<a href="/about" title="关于安问的一切">
+			关于安问
+		</a>
+	</p>
+</div>
+
+</div>
+{% end %}
 
 {% block bottom %}
 <script type="text/javascript">

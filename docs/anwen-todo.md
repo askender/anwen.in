@@ -2,11 +2,9 @@
 ========
 
 ##正在进行中 -important 121101-121111
-* post-author -bug
+
 * 充实基础内容
 * 安德AI的恢复与整合
-* 赞成-反对
-* 首页按照推荐值排序
 * 标签
 * 完善invite注册登陆
 * 密码找回
@@ -16,10 +14,13 @@
 * 消息系统
 * 图片上传or使用imgur:简单图片分享
 * 安问音乐
+* post-author -bug
 * 单元测试 -keep
 * 征求建议 -keep
 * 更多成员加入 -keep
 * database-auto-backup -keep
+* 首页按照推荐值排序
+* 赞成-反对
 
 ##未来计划 -if-have-time-or-team someday
 * MongoDB
