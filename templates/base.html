@@ -94,56 +94,51 @@
             </li>
           </ul>
 
-<!-- <form action="/search" class="navbar-search pull-right">
-  <input type="text" class="search-query" placeholder="search..." x-webkit-speech="" lang="zh-CN"/>
-</form> -->
-        </div>
+          <!-- <form action="/search" class="navbar-search pull-right">
+          <input type="text" class="search-query" placeholder="search..." x-webkit-speech="" lang="zh-CN"/>
+        </form>
+        -->
       </div>
     </div>
   </div>
+</div>
 
-  <div class="container">
-    <div class="row">
-      {% block body %}{% end %}
-    </div>
-    <!--/row-->
+<div class="container">
+  <div class="row">
+    {% block body %}{% end %}
   </div>
+  <!--/row-->
+</div>
 
-  <!-- Footer
+<!-- Footer
 ================================================== -->
-  <footer class="footer">
-    <div class="container">
-      <p class="pull-right">
-<!--         <a href="#">
-          {{_('Back to top')}}
-        </a>
-        <a id="to-top" href="javascript:;" style="display: block; right: 10px; bottom: 10px; opacity: 1; ">{{_('Back to top')}}</a> -->
-      </p>
-      <p>
-        copyleft ^_^ 2012 安问 创造和分享美好 v0.0.2 自由的理想主义社区与创造平台 <a href="https://github.com/askender/anwen.in">开源@github</a>
+<footer class="footer">
+  <div class="container">
+  <p>
+    copyleft ^_^ 2012 安问 创造和分享美好 v0.0.2 自由的理想主义社区与创造平台
+    <a href="https://github.com/askender/anwen.in">
+      开源@github
+    </a>
 
-      <a href="/about" title="关于我们的一切">
-        关于我们
-      </a>
-      <a href="/help" title="提建议或咨询">
-        提建议或咨询
-      </a>
-      <a href="/changelog" title="查看升级日志">
-        升级日志
-      </a>
-    </p>
-    </div>
-  </footer>
+    <a href="/about" title="关于我们的一切">
+      关于我们
+    </a>
+    <a href="/help" title="提建议或咨询">
+      提建议或咨询
+    </a>
+    <a href="/changelog" title="查看升级日志">
+      升级日志
+    </a>
+  </p>
+</div>
+</footer>
 
-
-
-  <!-- Le javascript
+<!-- Le javascript
 ================================================== -->
-  <!-- Placed at the end of the document so the pages load faster -->
+<!-- Placed at the end of the document so the pages load faster -->
 
-  <script src="{{ static_url("js/jquery.js") }}"></script>
-  <script src="{{ static_url("js/bootstrap.min.js") }}"></script>
-  {% block bottom %}{% end %}
-
+<script src="{{ static_url("js/jquery.js") }}"></script>
+<script src="{{ static_url("js/bootstrap.min.js") }}"></script>
+{% block bottom %}{% end %}
 </body>
 </html>

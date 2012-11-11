@@ -63,7 +63,7 @@ node_about = {
     }
 }
 
-# try:
-#     from server_setting import *
-# except:
-#     pass
+try:
+    from server_setting import *
+except:
+    pass

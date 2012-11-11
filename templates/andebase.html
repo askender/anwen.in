@@ -8,17 +8,9 @@
   <meta name="author" content="anwen">
   <link rel="alternate" href="/feed" type="application/atom+xml" title="安问"/>
   <!-- Le styles -->
+
   <link href="{{ static_url("css/bootstrap.min.css") }}" rel="stylesheet">
-  <style type="text/css">
-      body {
-        padding-top: 60px;
-        padding-bottom: 40px;
-      }
-      .sidebar-nav {
-        padding: 9px 0;
-      }
-    </style>
-  <link href="{{ static_url("css/bootstrap-responsive.css") }}" rel="stylesheet">
+  <link href="{{ static_url("css/bootstrap-responsive.min.css") }}" rel="stylesheet">
   <link href="{{ static_url("css/anwen.css") }}" rel="stylesheet">
   <link href="{{ static_url("css/ande.css") }}" rel="stylesheet">
   {% block head %}{% end %}
@@ -38,7 +30,7 @@
 <body>
 
   <div class="navbar navbar-fixed-top">
-    <div class="navbar-inner">
+    <div class="navbar-inner1">
       <div class="container">
         <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
           <span class="icon-bar"></span>
@@ -125,11 +117,30 @@
 
   </div>
   <div class="container">
-    <a id="to-top" href="#">
+<!--     <a id="to-top" href="#">
       返回顶部
-    </a>
+    </a> -->
     <footer>
-      copyleft&copy;2012 ai.anwen.in v0.0.1 开源AI
+  <div class="container">
+  <p>
+    copyleft ^_^ 2012 安问-安德 开源AI v0.0.2 自由的理想主义社区与创造平台
+    <a href="https://github.com/askender/anwen.in">
+      开源@github
+    </a>
+
+    <a href="/about" title="关于我们的一切">
+      关于我们
+    </a>
+    <a href="/help" title="提建议或咨询">
+      提建议或咨询
+    </a>
+    <a href="/ande-growup-log" title="">
+      安德成长日志
+    </a>
+  </p>
+</div>
+
+
     </footer>
   </div>
   <!--/.fluid-container-->
