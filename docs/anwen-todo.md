@@ -2,11 +2,6 @@
 ========
 
 ##正在进行中 -important 121101-121111
-* 完善title -bug 121101-
-* database-auto-backup
-* 返回顶部改为需要的时候显示 -bug -thanks@anti
-* 首页推荐的文章处空白但有一个点号 -bug -thanks@anti
-* 注册时 “个性域名” 不普适 -改为选填 -bug -thanks@anti
 * post-author -bug
 * 充实基础内容
 * 安德AI的恢复与整合
@@ -24,6 +19,7 @@
 * 单元测试 -keep
 * 征求建议 -keep
 * 更多成员加入 -keep
+* database-auto-backup -keep
 
 ##未来计划 -if-have-time-or-team someday
 * MongoDB
@@ -35,6 +31,12 @@
 * 设置城市时建议用下拉框，否则我设置成“火星”，混乱 -maybe提供列表，但允许自由填写 -thanks@anti
 
 ##已经实现：
+
+###121111
+* 返回顶部改为需要的时候显示(取消显示) -bug -thanks@anti
+* 完善title -bug
+* 首页推荐的文章处空白但有一个点号 -bug -thanks@anti
+* 注册时 “个性域名” 不普适 -改为选填 -bug -thanks@anti
 
 ###121017
 * 没有翻页时不显示页数，并提示暂无文章 -bug -thanks@anti

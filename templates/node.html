@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% block titlemore %}
--创造和分享美好
+- {{ node }}
 {% end %}
 {% block body %}
 <div class="span8">
@@ -11,7 +11,7 @@
 		<p>
 			(创造和分享，仅供学习交流，只分享打动你的~)
 		</p>
-		{% if int(page) < 2 %}
+		{% if int(page) < 1 %}
 		<p>
 			本分类暂时还没有文章~
 		</p>

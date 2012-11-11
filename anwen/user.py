@@ -57,9 +57,12 @@ class JoinusHandler(BaseHandler):
         password = hashlib.md5(password).hexdigest()
         email = self.get_argument("email", '')
         domain = self.get_argument("domain", '')
-        try:
-            user = User.get(user_email=email)
-        except:
+        if domain == '':
+            domain = name
+        if User.get(user_email=email):
+            self.write('用户已经存在，请直接登录')
+            self.redirect("/login")
+        else:
             u = User.create(user_name=name,
                             user_pass=password,
                             user_email=email,
@@ -70,8 +73,6 @@ class JoinusHandler(BaseHandler):
                     'user_domain': u.user_domain}
             self.set_secure_cookie("user", tornado.escape.json_encode(user))
             self.redirect(self.get_argument("next", "/"))
-        else:
-            self.write('用户已经存在，请重新注册或直接登录')
 
 
 class LogoutHandler(BaseHandler):
