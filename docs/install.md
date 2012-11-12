@@ -7,7 +7,7 @@
 ```bash
 git clone https://github.com/askender/anwen.in.git
 cd anwen.in
-pip install -r conf/requirements.txt
+sudo pip install -r conf/requirements.txt
 ```
 
 ## Start Anwen service

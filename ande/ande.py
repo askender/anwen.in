@@ -3,11 +3,13 @@
 from anwen.base import BaseHandler
 from db.models import Ande
 from andesay import AndeSay
+from firstmeet import sayfirstmeet
 
 
 class AndeHandler(BaseHandler):
     def get(self):
-        self.render("ande.html")
+        sayfirstmeet = sayfirstmeet()
+        self.render("ande.html", sayfirstmeet=sayfirstmeet)
 
     def post(self):
         usersay = self.get_argument("ask0", '')

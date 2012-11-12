@@ -1,6 +1,6 @@
 # -*- coding:utf-8 -*-
 
-from markdown import markdown
+import markdown
 from utils.fliter import filter_tags
 from utils.avatar import get_avatar
 from base import BaseHandler
@@ -21,7 +21,8 @@ class IndexHandler(BaseHandler):
             user = User.get(id=share.user_id)
             share.name = user.user_name
             share.domain = user.user_domain
-            share.markdown = filter_tags(markdown(share.markdown))[:100]
+            share.markdown = filter_tags(
+                markdown.markdown(share.markdown))[:100]
             share.gravatar = get_avatar(user.user_email, 16)
         members = User.select().order_by(('id', 'desc')).paginate(1, 20)
         for member in members:
@@ -48,7 +49,8 @@ class NodeHandler(BaseHandler):
             user = User.get(id=share.user_id)
             share.name = user.user_name
             share.domain = user.user_domain
-            share.markdown = filter_tags(markdown(share.markdown))[:100]
+            share.markdown = filter_tags(
+                markdown.markdown(share.markdown))[:100]
             share.gravatar = get_avatar(user.user_email, 16)
         members = User.select().order_by('id').paginate(1, 20)
         for member in members:
@@ -67,7 +69,7 @@ class SpecialHandler(BaseHandler):
             share = Share.get(slug=realpath)
         except:
             self.redirect("/404")
-        share.markdown = markdown(share.markdown)
+        share.markdown = markdown.markdown(share.markdown)
         if self.current_user:
             share.is_liking = Like.select().where(
                 share_id=share.id,
