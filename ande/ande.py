@@ -8,8 +8,8 @@ from firstmeet import sayfirstmeet
 
 class AndeHandler(BaseHandler):
     def get(self):
-        sayfirstmeet = sayfirstmeet()
-        self.render("ande.html", sayfirstmeet=sayfirstmeet)
+        print sayfirstmeet()
+        self.render("ande.html", say=sayfirstmeet())
 
     def post(self):
         usersay = self.get_argument("ask0", '')

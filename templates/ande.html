@@ -5,7 +5,10 @@
 <div id="page">
     <form class="searchForms" method="post">
 		<fieldsets>
-<div id="search_results"></div>
+      <div id="inbox">
+<div id="search_results">{{say}}</div>
+      </div>
+
         </fieldsets>
     </form>
     <form class="searchForms" id="andesay" method="post">
@@ -77,16 +80,18 @@ function ajax_search(){
           },
           //传送的dict数据
           success: function(data) { //回调函数，alert返回结果
-            if (data.length>0){ 
-            $("#search_results").html(data); 
-            $("#ss").html('');
+            if (data.length>0){
+              var node = $(data);
+              node.hide();
+              $("#inbox").append(node);
+              node.slideDown();
+              // $("#search_results").html(data); 
+              $("#ss").html('');
    }
           }
         });
 
 
-
-$("#search_results").show(1000);   
 } 
 </script>
   <script src="{{ static_url("js/googlesearch.js") }}"></script>
