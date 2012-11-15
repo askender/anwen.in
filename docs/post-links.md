@@ -6,6 +6,8 @@
 
 ###技术
 
+[编程：是一门艺术](http://kb.cnblogs.com/page/132089/)
+
 [程序员技术练级攻略](http://coolshell.cn/articles/4990.html)
 
 [程序员能力矩阵 Programmer Competency Matrix](http://static.icybear.net/%5BCN%5DProgrammer%20competency%20matrix.htm)

@@ -8,6 +8,9 @@ from log import logger
 
 class BaseHandler(RequestHandler):
 
+    def get_user_lang(self):
+        return self.request.headers['Accept-Language']
+
     def get_current_user(self):
         user_json = self.get_secure_cookie("user")
         if not user_json:
@@ -79,3 +82,9 @@ class JSONHandler(BaseHandler):
             return dict(obj)
         s = dumps(obj)  # default=handler
         return self.write(s)
+
+    # def get_user_locale(self):
+    #     if "locale" not in self.current_user.prefs:
+    #         # Use the Accept-Language header
+    #         return None
+    #     return self.current_user.prefs["locale"]

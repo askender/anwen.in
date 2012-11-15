@@ -6,9 +6,7 @@ import urllib2
 
 from tool.fenci import fenci
 from tool.xpinyin import Pinyin
-from sayhello import sayhello
-# from sayweather import sayweather
-from saysong import saysong
+import say
 
 
 class AndeSay(object):
@@ -56,7 +54,7 @@ class AndeSay(object):
 
     def get_andesay(self, usersay, splitter=''):
         andesay = ''
-
+        andesay += '<br/>'
         p = Pinyin()
         userfenci = fenci(usersay)
         # userfencij = json.loads(userfenci)
@@ -64,8 +62,9 @@ class AndeSay(object):
         #city = p.get_pinyin(self.city)
 
         # andesay += sayweather(usersay,city)
-        andesay += sayhello(usersay)
-        andesay += saysong(usersay)
+        andesay += say.hello(usersay)
+        print andesay
+        andesay += say.song(usersay)
 
         andethink = ''
         andethink += '<br/>ande-think-trace,it will remove'
@@ -83,5 +82,6 @@ class AndeSay(object):
         debug = True  # True False
         if debug:
             andesay += andethink
+        print andesay
 
         return andesay
