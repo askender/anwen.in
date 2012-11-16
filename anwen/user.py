@@ -59,7 +59,7 @@ class JoinusHandler(BaseHandler):
         domain = self.get_argument("domain", '')
         if domain == '':
             domain = name
-        if User.get(user_email=email):
+        if User.select().where(user_email=email).count():
             self.write('用户已经存在，请直接登录')
             self.redirect("/login")
         else:
