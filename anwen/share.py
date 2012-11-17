@@ -4,7 +4,7 @@ import markdown
 import datetime
 from random import randint
 import tornado.web
-from utils.avatar import *
+from utils.avatar import get_avatar
 from base import BaseHandler
 from peewee import F
 from db.models import User, Share, Comment, Like, Hit

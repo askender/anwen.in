@@ -6,6 +6,7 @@ from anwen.share import ShareHandler, EntryHandler, CommentHandler, LikeHandler,
 from anwen.suggest import LikesuggestHandler, DislikesuggestHandler
 from ande.ande import AndeHandler
 from anwen.talk import TalkHandler, ChatSocketHandler, MessageNewHandler, MessageUpdatesHandler
+from anwen.other import EditHandler
 
 handlers = [
     (r"/", IndexHandler),
@@ -46,7 +47,7 @@ handlers = [
     (r"/a/message/new", MessageNewHandler),
     (r"/a/message/updates", MessageUpdatesHandler),
 
-
+    (r"/edit", EditHandler),
 
     # Custom 404 NotyetHandler,always put this at last
     (r'/(.*)', NotyetHandler),
