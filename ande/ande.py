@@ -19,6 +19,10 @@ class AndeHandler(BaseHandler):
         print usersay
         a = AndeSay()
         andesay = a.get_andesay(usersay)
+        user_ip = self.request.remote_ip
+        andesay += '<br/>your ip:' + user_ip
+        andesay += '<br/>'
+
         user_id = ''
         if self.current_user:
             user_id = self.current_user["user_id"]
@@ -28,4 +32,5 @@ class AndeHandler(BaseHandler):
             user_id='1',
             usersay=usersay,
             andesay=andesay, )
+        print andesay
         self.write(andesay)

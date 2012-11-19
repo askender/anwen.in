@@ -83,7 +83,7 @@ function ajax_search(){
             if (data.length>0){
               var node = $(data);
               node.hide();
-              $("#inbox").append(node);
+              $("#inbox").html(node);
               node.slideDown();
               // $("#search_results").html(data); 
               $("#ss").html('');
