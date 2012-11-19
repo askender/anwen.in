@@ -8,14 +8,30 @@ from log import logger
 
 class BaseHandler(RequestHandler):
 
-    def get_user_lang(self):
-        return self.request.headers['Accept-Language']
-
     def get_current_user(self):
         user_json = self.get_secure_cookie("user")
         if not user_json:
             return None
         return json_decode(user_json)
+
+    def get_user_lang(self, default="en_US"):
+        if "Accept-Language" in self.request.headers:
+            languages = self.request.headers["Accept-Language"].split(",")
+            locales = []
+            for language in languages:
+                parts = language.strip().split(";")
+                if len(parts) > 1 and parts[1].startswith("q="):
+                    try:
+                        score = float(parts[1][2:])
+                    except (ValueError, TypeError):
+                        score = 0.0
+                else:
+                    score = 1.0
+                locales.append((parts[0], score))
+            if locales:
+                locales.sort(key=lambda (l, s): s, reverse=True)
+                return locales[0][0]
+        return default
 
 
 def require_login(method):

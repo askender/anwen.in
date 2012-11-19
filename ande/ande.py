@@ -16,11 +16,12 @@ class AndeHandler(BaseHandler):
 
     def post(self):
         usersay = self.get_argument("ask0", '')
-        print usersay
+        # print usersay
+        # user_lang = self.get_user_lang()
+        userip = self.request.remote_ip
         a = AndeSay()
-        andesay = a.get_andesay(usersay)
-        user_ip = self.request.remote_ip
-        andesay += '<br/>your ip:' + user_ip
+        andesay = a.get_andesay(usersay, userip)
+        andesay += '<br/>your ip:' + userip
         andesay += '<br/>'
 
         user_id = ''
@@ -32,5 +33,5 @@ class AndeHandler(BaseHandler):
             user_id='1',
             usersay=usersay,
             andesay=andesay, )
-        print andesay
+        # print andesay
         self.write(andesay)

@@ -11,14 +11,6 @@ from options.url import handlers
 from anwen.uimodules import EntryModule, UseradminModule
 
 
-class Application(tornado.web.Application):
-    def __init__(self):
-        options.web_server.update(dict(
-            ui_modules={"Entry": EntryModule, "Useradmin": UseradminModule},
-        ))
-        tornado.web.Application.__init__(
-            self, handlers, **options.web_server)
-
 options.web_server.update(
     dict(ui_modules={"Entry": EntryModule, "Useradmin": UseradminModule},))
 application = tornado.web.Application(handlers, **options.web_server)
@@ -33,7 +25,7 @@ def create_db():
 def launch():
     tornado.locale.load_translations(options.web_server['locale_path'])
     tornado.options.parse_command_line()
-    http_server = tornado.httpserver.HTTPServer(Application(), xheaders=True)
+    http_server = tornado.httpserver.HTTPServer(application, xheaders=True)
     http_server.listen(options.port)
     logger.info('Server started on %s' % options.port)
     tornado.ioloop.IOLoop.instance().start()
