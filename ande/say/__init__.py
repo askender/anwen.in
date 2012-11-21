@@ -69,5 +69,15 @@ def weather(usersay, userip):
         wea_0 = weather['future']['wea_0']
         tmin_0 = weather['future']['tmin_0']
         tmax_0 = weather['future']['tmax_0']
-        weather = u'今天天气是%s,%s到%s是摄氏度' % (wea_0, tmin_0, tmax_0)
+        wea_1a = weather['future']['forecast'][1]['BWEA']
+        wea_1b = weather['future']['forecast'][1]['EWEA']
+        tmax_1 = weather['future']['forecast'][1]['TMAX']
+        tmin_1 = weather['future']['forecast'][1]['TMIN']
+        if wea_1a == wea_1b:
+            wea_1 = u'整天%s' % (wea_1a)
+        else:
+            wea_1 = u'%s转%s' % (wea_1a, wea_1b)
+        weather = u'今天天气是%s,%s到%s摄氏度' % (wea_0, tmin_0, tmax_0)
+        weather += '<br />'
+        weather += u'明天天气是%s,%s到%s摄氏度' % (wea_1, tmin_1, tmax_1)
     return weather
