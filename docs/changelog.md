@@ -26,10 +26,7 @@
 * app
 * 信息可视化 Information visualization
 * 消息系统
-* 远景使命future
-* 加入我们
-* 联系我们
-* 社区：新浪微博,豆瓣小站
+* 远景,使命,future,加入我们,联系我们,社区,新浪微博,豆瓣小站
 
 ####未来计划 -if-have-time-or-team someday
 * MongoDB

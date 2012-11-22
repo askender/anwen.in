@@ -109,6 +109,12 @@ class Hit(AnwenModel):
     hittime = DateTimeField(default=datetime.datetime.now)
 
 
+class Tag(AnwenModel):
+    user = ForeignKeyField(User)
+    share = ForeignKeyField(Share)
+    tagname = TextField()
+
+
 def main():
     # when you're ready to start querying, remember to connect
     anwen_db.connect()
@@ -119,4 +125,5 @@ def main():
     Like.create_table()
     Relationship.create_table()
     Hit.create_table()
+    Tag.create_table()
     print('database created')
