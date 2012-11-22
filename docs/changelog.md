@@ -3,17 +3,17 @@
 
 ####正在进行中
 
-* github-public-id before 121119
-* 安德AI的恢复与整合 before 121119
-* 标签 before 121119
-* 完善invite注册登陆 before 121119
-* 密码找回 before 121119
-* 链接分享 link-blog before 121119
-* oauth登录 before 121119
-* 分享维基 before 121119
-* 图片上传or使用imgur:简单图片分享 before 121119
-* 安问音乐 before 121119
-* post-author -bug before 121119
+* github-public-id 121122 late3
+* 安德AI的恢复与整合 keep
+* 标签 121122 late3
+* 完善invite注册登陆 121122 late3
+* 密码找回 121122 late3
+* 链接分享 link-blog 121122 late3
+* oauth登录 121122 late3
+* 分享维基 121129 late7
+* 图片上传or使用imgur:简单图片分享 121129 late7
+* 安问音乐 121129 late7
+* post-author -bug 121129 late7
 * 充实基础内容 -keep
 * 单元测试 -keep
 * 征求建议 -keep
@@ -26,6 +26,10 @@
 * app
 * 信息可视化 Information visualization
 * 消息系统
+* 远景使命future
+* 加入我们
+* 联系我们
+* 社区：新浪微博,豆瓣小站
 
 ####未来计划 -if-have-time-or-team someday
 * MongoDB

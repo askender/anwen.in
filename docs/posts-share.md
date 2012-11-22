@@ -6,15 +6,6 @@
 
 [旅行，写作，编程](http://www.aqee.net/traveling-writing-programming/)
 
-[牛奶标签风波和转基因标识投票](http://www.immusoul.com/archives/2122.html)
-
-
-[影评：《V怪客 / V字仇杀队》](http://program-think.blogspot.com/2011/11/film-v-for-vendetta.html)
-
-[关于抗日战争——谈谈真理部对抗战历史的篡改 - 编程随想的博客](http://program-think.blogspot.com/2010/09/sino-japanese-war.html)
-
-[回顾 六..四 系列[4]：废帝胡.耀.邦其人](http://program-think.blogspot.com/2011/07/june-fourth-incident-4.html)
-
 ###技术
 
 - [编程：是一门艺术](http://kb.cnblogs.com/page/132089/)
