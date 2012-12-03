@@ -1,6 +1,6 @@
 # -*- coding:utf-8 -*-
 
-import markdown
+import markdown2
 import datetime
 from random import randint
 import tornado.web
@@ -23,7 +23,7 @@ class ShareHandler(BaseHandler):
     def post(self):
         id = self.get_argument("id", None)
         title = self.get_argument("title")
-        markdowna = self.get_argument("markdown")
+        content = self.get_argument("markdown")
         sharetype = self.get_argument("type")
         if id:
             try:
@@ -31,12 +31,12 @@ class ShareHandler(BaseHandler):
             except:
                 self.redirect("/404")
             share = Share.update(
-                title=title, markdown=markdowna,
+                title=title, markdown=content,
                 sharetype=sharetype,
                 updated=datetime.datetime.now()).where(id=id).execute()
         else:
             share = Share.create(title=title,
-                                 markdown=markdown,
+                                 markdown=content,
                                  sharetype=sharetype,
                                  user_id=self.current_user["user_id"], )
             User.update(
@@ -48,11 +48,12 @@ class ShareHandler(BaseHandler):
 
 class EntryHandler(BaseHandler):
     def get(self, id):
-        try:
-            share = Share.get(id=id)
-        except:
-            self.redirect("/404")
-        share.markdown = markdown.markdown(share.markdown)
+        # try:
+        #     share = Share.get(id=id)
+        # except:
+        #     self.redirect("/404")
+        share = Share.get(id=id)
+        share.markdown = markdown2.markdown(share.markdown)
         if self.current_user:
             share.is_liking = Like.select().where(
                 share_id=share.id,
@@ -115,7 +116,7 @@ class CommentHandler(BaseHandler):
     def post(self):
         commentbody = self.get_argument("commentbody", None)
         share_id = self.get_argument("share_id", None)
-        html = markdown.markdown(commentbody)
+        html = markdown2.markdown(commentbody)
         Comment.create(
             user_id=self.current_user["user_id"],
             share_id=share_id, commentbody=commentbody)

@@ -3,9 +3,10 @@
 
 ####正在进行中
 
+* MongoDB & restful api
+* 标签
 * github-public-id 121122 late3
 * 安德AI的恢复与整合 keep
-* 标签 121122 late3
 * 完善invite注册登陆 121122 late3
 * 密码找回 121122 late3
 * 链接分享 link-blog 121122 late3
@@ -29,7 +30,6 @@
 * 远景,使命,future,加入我们,联系我们,社区,新浪微博,豆瓣小站
 
 ####未来计划 -if-have-time-or-team someday
-* MongoDB
 * 消息系统
 * 文章markdown编辑器 http://oscargodson.github.com/EpicEditor/
 * 开放API

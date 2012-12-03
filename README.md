@@ -26,6 +26,9 @@
 
 ## Thanks
 
+* python
+* tornado
+* mongodb mysql
 * [Twitter Bootstrap](https://twitter.github.com/bootstrap)
 
 
