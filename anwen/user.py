@@ -90,7 +90,7 @@ class UserhomeHandler(BaseHandler):
             user = User.get(user_domain=name)
         except:
             self.redirect("/404")
-        user.user_say = markdown.markdown(user.user_say)
+        user.user_say = markdown2.markdown(user.user_say)
         likenum = Like.select().where(user_id=user.id).count()
         user.gravatar = get_avatar(user.user_email, 100)
         self.render("userhome.html", user=user, likenum=likenum)
