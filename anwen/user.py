@@ -1,11 +1,11 @@
 # -*- coding:utf-8 -*-
 
 import hashlib
-import markdown
+import markdown2
 
 import tornado.escape
 
-from utils.avatar import *
+from utils.avatar import get_avatar
 from base import BaseHandler
 from db.models import User, Share, Like
 
