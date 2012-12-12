@@ -23,6 +23,7 @@
 * 寻找无版权限制的优质内容
 * 各种有趣的小项目,包括安德,html5游戏,线下活动等
 * 加入人工智能[安德·alpha](http://i.askender.com/ande) 原有能力近期恢复
+* 此为旧版,使用sql. [新版安问](https://github.com/anwen/anwen) 使用mongodb
 
 ## Thanks
 
