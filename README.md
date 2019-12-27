@@ -1,6 +1,8 @@
 安问 anwen
 ========
 
+迁移至： <https://github.com/anwen/anwen>
+
 ####安问-创造和分享美好 create and share something nice
 
 * 自由的理想主义社区与创造平台，开源
